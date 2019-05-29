@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ch">
+<head>
+    <!-- meta -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit">
+    <meta property="qc:admins" content="23635710066417756375"/>
+    <meta name="baidu-site-verification" content="QIQ6KC1oZ6"/>
+
+    <title th:text="${resume.user.name}+'-简历'"/>
+
+    <link rel="Shortcut Icon" href="//www.lgstatic.com/www/static/common/static/favicon_faed927.ico">
+
+    <link rel="alternate" media="handheld" href="#"/>
+
+    <link rel="stylesheet" type="text/css" href="//www.lgstatic.com/www/static/pkg/widgets_edb8a0d.css"/>
+    <link rel="stylesheet" type="text/css" href="//www.lgstatic.com/www/static/pkg/mycenter/page/preview/main.html_aio_3437b75.css"/>
+    <style type="text/css">
+        .progress_skill {
+            background: #E7E7E7;
+            width: 150px;
+            height: 10px;
+            border-radius: 10px;
+            -webkit-appearance: none;
+        }
+
+        ::-ms-fill {
+            background: #2FB28A;
+        }
+
+        ::-moz-progress-bar {
+            background: #2FB28A;
+        }
+
+        ::-webkit-progress-bar {
+            background: #E7E7E7;
+        }
+
+        ::-webkit-progress-value {
+            background: #2FB28A;
+        }
+    </style>
+</head>
+<body>
+<!-- 页面主体START -->
+<div class="container clearfix" id="container">
+    <div class="myresume">
+        <div class="basic" id="baseInfo">
+            <div class="basic-photo" data-lg-tj-id="1jit" data-lg-tj-no="0063" data-lg-tj-cid="idnull">
+                <img class="mr_headimg user-avatar" id="userpic" th:src="${resume.user.avatar}" width="120"
+                     height="120" alt="头像"/>
+                <!--                <img class="basic-photo_shadow" src="//www.lgstatic.com/www/static/mycenter/modules/common/img/shadow_tx_a482008.png" width="119" height="119"/>-->
+            </div>
+            <div class="basic-info">
+                <div class="basic-name-area">
+                    <p class="basic-name female" th:text="${resume.user.name}"/>
+                    <i class="icon-sex icon-sex__male "></i>
+                </div>
+                <p>
+                    <span class="basic-company" th:text="${resume.company==null?'待业':resume.company.name}"/>
+                    <span> / </span>
+                    <span class="basic-job" th:text="${resume.jobLabel}"/>
+                </p>
+                <p class="basic-self">
+                    <span class="basic-exp" th:text="|${resume.exeprience}年工作经验|"/>
+                    <span class="basic-edu"> / 本科</span>
+                    <span class="basic-age" th:text="| / ${resume.user.age}岁|"/>
+                </p>
+                <p>
+            <span class="basic-tel">
+                <i class="basic-tel_icon"></i><span th:text="${resume.user.phone}"/>
+            </span>
+                    <span class="basic-email">
+                <i class="basic-email_icon"></i><span th:text="${resume.user.email}"/>
+            </span>
+                </p>
+            </div>
+        </div>
+        <div class="mr-template per" id="perAbility" th:unless="${resume.synopsis == null || resume.synopsis.trim().isEmpty()}">
+            <div class="mr-template_title">
+                <span>自我描述</span>
+            </div>
+            <div class="tagboard integrative-tag">
+                <span class="tagboard-tag" style="color: black;margin-right: 10px" th:each="language:${resume.language}" th:text="${language.title}"/>
+            </div>
+            <div class="per-self_content">
+                <div class="per-self_des">
+                    <p style="white-space: pre-wrap" th:text="${resume.synopsis}"/>
+                </div>
+            </div>
+        </div>
+        <div class="mr-template per" id="perAbility" style="padding-top: 10px" th:unless="${resume.technique == null || resume.technique.size()== 0}">
+            <div class="mr-template_title">
+                <span>技能</span>
+            </div>
+            <table style="width: 100%;">
+                <tr style="width: 100%" th:each="technique,techniqueStat:${resume.technique}"
+                    th:with="nextIndex=${techniqueStat.index + 1},maxValue = ${100},islast = ${techniqueStat.index >= resume.technique.size() - 2}"
+                    th:if="${techniqueStat.index % 2 == 0}">
+                    <td th:style="'width:50%;padding-bottom:' + ${islast ? '0' : '5px'}">
+                        <b style="font-size: 13px;margin-left: 5px" th:text="${technique.title}"/>
+                        <div>
+                            <progress max="100" class="progress_skill" th:value="${technique.percent * maxValue}"></progress>
+                            <span style="font-size: 13px;margin-left: 5px" th:text="${technique.description}"/>
+                        </div>
+
+                    </td>
+                    <td th:style="'width:50%;padding-bottom:'+${islast ? '0' : '5px'}" th:if="${nextIndex < resume.technique.size()}">
+                        <b style="font-size: 13px;margin-left: 5px" th:text="${resume.technique[nextIndex].title}"/>
+                        <div>
+                            <progress th:max="${maxValue}" class="progress_skill" th:value="${resume.technique[nextIndex].percent * maxValue}"></progress>
+                            <span style="font-size: 13px;margin-left: 5px" th:text="${resume.technique[nextIndex].description}"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="mr-template work-exp" id="workExp">
+            <div class="mr-template_title">
+                <span>工作经历</span>
+            </div>
+            <ol class="work-exp_group">
+                <li class="work-exp_list" th:each="pe:${resume.experiences}">
+                    <p class="exp-list_time" th:text="${pe.start} + ' - ' + ${pe.end == null || pe.end.trim().isEmpty() ? '至今' : pe.end}"/>
+                    <div class="exp-list_top">
+                        <img th:src="${pe.company.icon == null || pe.company.icon.trim().isEmpty() ? '/images/ic_default_company.jpg' : pe.company.icon}"
+                             alt="公司Logo">
+                        <div>
+                            <strong class="exp-list_title">
+                                <b th:text="${pe.company.name}"/>
+                            </strong>
+                            <p th:text="${pe.station}"/>
+                        </div>
+                        <img src="/images/ic_link.jpg" title="公司官网" style="margin-left: 20px;width: 30px;height: 30px"
+                             th:data-url="${pe.company.homepage}" onclick="window.open(this.getAttribute('data-url'),'_blank')" alt=""
+                             th:unless="${pe.company.homepage == null || pe.company.homepage.trim().length()==0}">
+                        <img src="/images/ic_download.jpg" title="点击下载" style="object-fit:contain;margin-left: 5px;width: 35px;height: 35px"
+                             th:data-url="${pe.opus}" onclick="window.open(this.getAttribute('data-url'),'_self')" alt=""
+                             th:unless="${pe.opus == null || pe.opus.trim().length() == 0}">
+                    </div>
+                    <div class="tagboard" th:unless="${pe.labels == null || pe.labels.isEmpty()}">
+                        <span style="margin-right: 5px" class="tagboard-tag" th:each="label:${pe.labels}" th:text="${label.name}"
+                              th:unless="${label == null || label.name.trim().length() == 0}"/>
+                    </div>
+                    <div class="per-self_content" style="margin-top: 10px">
+                        <div class="per-self_des">
+                            <p></p>
+                            <ul>
+                                <li><a style="color:#2FB28A;font-weight: bold">概述：&nbsp;</a><span th:text="${pe.sketch}"/><br/></li>
+                                <li><a style="color:#2FB28A;font-weight: bold">职责：&nbsp;</a><span th:text="${pe.jobContent}"/><br/></li>
+                            </ul>
+                            <p></p>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="mr-template edu-exp" id="eduExp" style="padding-top: 0" th:unless="${resume.education == null || resume.education.isEmpty()}">
+            <div class="mr-template_title">
+                <span>教育经历</span>
+            </div>
+            <ol class="edu-exp_group">
+                <li class="edu-exp_list" th:each="edu:${resume.education}">
+                    <p class="exp-list_time" th:text="${edu.start} + ' - ' + ${edu.end == null || edu.end.trim().isEmpty() ? '至今':edu.end}"/>
+                    <div class="exp-list_top">
+                        <img th:src="${edu.school.icon}" alt="学校Logo">
+                        <div>
+                            <div>
+                                <strong th:text="${edu.school.name}"/>
+                                <span class="tagboard-tag" style="color: black;border-color: gray;border-style: solid;border-width: 1px;
+                                padding: 2px;text-align: center;font-size: 12px;font-weight: bold;border-radius: 100px;margin-right: 5px"
+                                      th:each="label:${edu.school.labels}" th:text="${label.name}"/>
+                            </div>
+                            <p th:text="|${edu.record} / ${edu.major}|"/>
+                        </div>
+
+                    </div>
+                </li>
+
+            </ol>
+        </div>
+    </div>
+
+
+</div>
+<!-- 页面主体END -->
+</body>
+</html>
