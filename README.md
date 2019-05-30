@@ -6,5 +6,5 @@
 
 ## JPA
 
-## [Mysql]()
+## [Mysql](doc/db/mysql.md)
 
