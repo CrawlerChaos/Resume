@@ -4,7 +4,7 @@
 
 + 创建用户 %标示任意ip 
 
-`CREATE USER 'user'@'%'' IDENTIFIED BY 'password'`  
+`CREATE USER 'user'@'%' IDENTIFIED BY 'password'`  
 + 只读权限 
 
 `GRANT SELECT ON dbname.tablename TO 'user'@'%';`
