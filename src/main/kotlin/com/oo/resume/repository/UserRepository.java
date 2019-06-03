@@ -32,5 +32,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "eUser.avatar = CASE WHEN :#{#user.avatar} IS NULL THEN eUser.avatar ELSE :#{user.avatar} END ," +
             "eUser.email = CASE WHEN :#{#user.email} IS NULL THEN eUser.avatar ELSE :#{#user.email} END " +
             "where eUser.id = :#{#user.id}")
-    int update(@Param("user") User user);
+    void update(@Param("user") User user);
+
+    @Modifying
+    @Query("update User eUser set " +
+            "eUser.name = CASE WHEN :name IS NULL THEN eUser.name ELSE :name END ," +
+            "eUser.age = CASE WHEN :age IS NULL THEN eUser.age ELSE :age END ," +
+            "eUser.sex = CASE WHEN :sex IS NULL THEN eUser.sex ELSE :sex END ," +
+            "eUser.avatar = CASE WHEN :avatar IS NULL THEN eUser.avatar ELSE :avatar END ," +
+            "eUser.email = CASE WHEN :email IS NULL THEN eUser.avatar ELSE :email END " +
+            "where eUser.id = :id")
+    void update(@Param("id") Long id, @Param("name") String name, @Param("age") Integer age, @Param("sex") Integer sex, @Param("avatar") String avatar,
+                @Param("email") String email);
 }

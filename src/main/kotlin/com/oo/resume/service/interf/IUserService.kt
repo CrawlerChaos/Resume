@@ -1,6 +1,5 @@
 package com.oo.resume.service.interf
 
-import com.oo.resume.entity.Resume
 import com.oo.resume.entity.User
 
 /**

@@ -3,7 +3,6 @@ package com.oo.resume.service.impl
 import com.oo.resume.entity.User
 import com.oo.resume.repository.UserRepository
 import com.oo.resume.service.interf.IUserService
-import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -27,9 +26,7 @@ open class UserServiceImpl : IUserService {
 
     @Transactional
     override fun update(user: User): User {
-//        val userEntity = userRepo.getOne(user.id)
-//        BeanUtils.copyProperties(user, userEntity,BeanUtils.find)
-        userRepo.update(user)
+        userRepo.update(user.id, user.name, user.age, user.sex, user.avatar, user.email)
         return user
     }
 
