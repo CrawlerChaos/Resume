@@ -78,7 +78,7 @@ open class ResumeService : IResumeService {
     private fun saveUser(user: User?) {
         if (user == null) return
         var userEntity: User? = null
-        if (user.session_user != null) userEntity = userRepo.findUserByUUID(user.session_user!!)
+        if (user.session_user != null) userEntity = userRepo.findUserByUUID(user.session_user)
         if (userEntity == null) {
             userEntity = userRepo.save(user)
             user.session_user = userEntity.session_user

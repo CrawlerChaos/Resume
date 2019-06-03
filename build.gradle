@@ -24,6 +24,10 @@ repositories {
     mavenCentral()
 }
 
+noArg {
+    annotation("javax.persistence.Entity")
+}
+
 //allOpen {
 //    annotation("javax.persistence.Entity")
 //    annotation("javax.persistence.MappedSuperclass")
