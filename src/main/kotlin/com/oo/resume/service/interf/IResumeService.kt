@@ -12,5 +12,5 @@ interface IResumeService {
     fun getResumeByShortLink(shortLink: String?): Resume?
     fun getResumeByUserId(id: String?): Resume?
     fun save(resume: Resume?): Resume?
-    fun delete(resumeId: Long?): Unit?
+    fun delete(resumeId: Long?): Boolean?
 }

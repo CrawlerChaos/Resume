@@ -53,9 +53,10 @@ open class ResumeService : IResumeService {
         return resumeRepo.save(resume)
     }
 
-    override fun delete(resumeId: Long?): Unit? {
-        if (resumeId == null) return null
-        return resumeRepo.deleteById(resumeId)
+    override fun delete(resumeId: Long?): Boolean? {
+        if (resumeId == null) return false
+        resumeRepo.deleteById(resumeId)
+        return true
     }
 
     private fun illLeagal(resume: Resume): Boolean {
@@ -77,12 +78,12 @@ open class ResumeService : IResumeService {
     private fun saveUser(user: User?) {
         if (user == null) return
         var userEntity: User? = null
-        if (user.id != null) userEntity = userRepo.findUserByUUID(user.id)
+        if (user.session_user != null) userEntity = userRepo.findUserByUUID(user.session_user!!)
         if (userEntity == null) {
             userEntity = userRepo.save(user)
-            user.id = userEntity.id
+            user.session_user = userEntity.session_user
         } else {
-            user.id = userEntity.id
+            user.session_user = userEntity.session_user
         }
     }
 

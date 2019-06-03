@@ -1,5 +1,6 @@
 package com.oo.resume.entity
 
+import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.GenericGenerator
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -14,14 +15,20 @@ import javax.persistence.Id
  */
 @Entity
 data class User @JvmOverloads constructor(
-        @Column(nullable = false, length = 32)
-        var name: String,//名字
-
-        @Column(nullable = false)
-        var age: Int,//年龄
-
-        @Column(nullable = false, length = 32)
+        @Column(nullable = false, length = 16)
         var phone: String,//电话
+
+        @Column(nullable = false, length = 16)
+        var password: String?,//密码
+
+        @Column(nullable = false, length = 16)
+        var name: String?,//名字
+
+        @Column(nullable = true)
+        var age: Int? = null,//年龄
+
+        @Column(nullable = true)
+        var sex: Int? = null,//性别 0:男 1:女
 
         @Column(nullable = true, length = 32)
         var email: String? = null,//邮件
@@ -29,9 +36,13 @@ data class User @JvmOverloads constructor(
         @Column(nullable = true)
         var avatar: String? = null,//头像
 
-        @Id
-        @GenericGenerator(name="idGenerator", strategy="uuid")
-        @GeneratedValue(generator="idGenerator")
         @Column(length = 32)
-        var id: String? = null
+        var session_key: String? = null,//会话
+
+        @Column(length = 32)
+        var session_user: String? = null,//会话
+
+        @Id
+        @GeneratedValue
+        var id: Long = 0
 )

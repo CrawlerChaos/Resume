@@ -26,7 +26,7 @@ class ResumeController {
     }
 
     @DeleteMapping("/delete/{resumeId}")
-    fun delete(@PathVariable(value = "resumeId", required = true) resumeId: Long?): Unit? {
+    fun delete(@PathVariable(value = "resumeId", required = true) resumeId: Long?): Boolean? {
         return resumeService.delete(resumeId)
     }
 
@@ -41,7 +41,7 @@ class ResumeController {
         val synopsis = "· 勤奋好学\n" +
                 "· 喜欢美女\n" +
                 "· 热爱打炮"
-        val baseInfo = User("杨冲", 23, "18482101719", "786372615@qq.com",
+        val baseInfo = User("18482101719", "123456", "杨冲", 23, 0,"786372615@qq.com",
                 "http://www.lgstatic.com/i/image2/M01/2F/09/CgoB5lzZKZOAZFlbAABCFbmSTGs258.jpg")
 
         val edu = ArrayList<Education>()
@@ -73,7 +73,7 @@ class ResumeController {
                 "· 熟悉远程工作流程，在硅谷创新公司BorderXlab工作\n" +
                 "· 擅长Java Hook，Apt，Gradle Task挂接\n" +
                 "· 擅长MVVM架构"
-        val baseInfo = User("杨超", 29, "13550310197", "382987055@qq.com",
+        val baseInfo = User("13550310197", "161300", "杨超", 29, 0,"382987055@qq.com",
                 "http://www.lgstatic.com/i/image2/M01/2F/09/CgoB5lzZKZOAZFlbAABCFbmSTGs258.jpg")
 
         val edu = ArrayList<Education>()
