@@ -1,27 +1,23 @@
-package com.oo.resume.repository;
+package com.oo.resume.repository
 
-import com.oo.resume.entity.User;
-
-import org.jetbrains.annotations.NotNull;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
+import com.oo.resume.entity.User
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * yangchao
  * cd.uestc.superyoung@gmail.com
  * 2019-05-24 15:13
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+interface UserRepository : JpaRepository<User, Long> {
     @Query("from User user where user.name=:name")
-    @NotNull
-    User findUserByName(@Param("name") String name);
+    fun findUserByName(@Param("name") name: String): User
 
     @Query("from User user where user.id=:uuid")
-    @NotNull
-    User findUserByUUID(@Param("uuid") String uuid);
+    fun findUserByUUID(@Param("uuid") uuid: String): User
 
     @Modifying
     @Transactional
@@ -32,7 +28,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "eUser.avatar = CASE WHEN :#{#user.avatar} IS NULL THEN eUser.avatar ELSE :#{user.avatar} END ," +
             "eUser.email = CASE WHEN :#{#user.email} IS NULL THEN eUser.avatar ELSE :#{#user.email} END " +
             "where eUser.id = :#{#user.id}")
-    void update(@Param("user") User user);
+    fun update(@Param("user") user: User)
 
     @Modifying
     @Query("update User eUser set " +
@@ -42,6 +38,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "eUser.avatar = CASE WHEN :avatar IS NULL THEN eUser.avatar ELSE :avatar END ," +
             "eUser.email = CASE WHEN :email IS NULL THEN eUser.avatar ELSE :email END " +
             "where eUser.id = :id")
-    void update(@Param("id") Long id, @Param("name") String name, @Param("age") Integer age, @Param("sex") Integer sex, @Param("avatar") String avatar,
-                @Param("email") String email);
+    fun update(@Param("id") id: Long?, @Param("name") name: String?, @Param("age") age: Int?, @Param("sex") sex: Int?, @Param("avatar") avatar: String?,
+               @Param("email") email: String?)
 }

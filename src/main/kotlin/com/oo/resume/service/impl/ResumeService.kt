@@ -78,7 +78,7 @@ open class ResumeService : IResumeService {
     private fun saveUser(user: User?) {
         if (user == null) return
         var userEntity: User? = null
-        if (user.session_user != null) userEntity = userRepo.findUserByUUID(user.session_user)
+        if (user.session_user != null) userEntity = userRepo.findUserByUUID(user.session_user!!)
         if (userEntity == null) {
             userEntity = userRepo.save(user)
             user.session_user = userEntity.session_user
@@ -93,7 +93,7 @@ open class ResumeService : IResumeService {
         if (companyEntity == null) {
             companyEntity = companyRepo.save(company)
         }
-        company.id = companyEntity.id
+        company.id = companyEntity?.id ?: 0
     }
 
     private fun mergeSchool(school: School?) {
@@ -103,7 +103,7 @@ open class ResumeService : IResumeService {
         if (schoolEntity == null) {
             schoolEntity = schoolRepo.save(school)
         }
-        school.id = schoolEntity.id
+        school.id = schoolEntity?.id ?: 0
     }
 
     private fun mergeLabel(label: Label?) {
@@ -112,6 +112,6 @@ open class ResumeService : IResumeService {
         if (labelEntity == null) {
             labelEntity = labelRepo.save(label)
         }
-        label.id = labelEntity.id
+        label.id = labelEntity?.id ?: 0
     }
 }
