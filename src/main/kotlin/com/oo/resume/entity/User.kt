@@ -2,10 +2,7 @@ package com.oo.resume.entity
 
 import org.hibernate.annotations.DynamicUpdate
 import org.hibernate.annotations.GenericGenerator
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 /**
  *   yangchao
@@ -14,15 +11,16 @@ import javax.persistence.Id
  *
  */
 @Entity
+@Table(uniqueConstraints = [UniqueConstraint(columnNames = ["phone"])])
 data class User @JvmOverloads constructor(
         @Column(nullable = false, length = 16)
         var phone: String,//电话
 
         @Column(nullable = false, length = 16)
-        var password: String?,//密码
+        var password: String,//密码
 
         @Column(nullable = false, length = 16)
-        var name: String?,//名字
+        var name: String,//名字
 
         @Column(nullable = true)
         var age: Int? = null,//年龄

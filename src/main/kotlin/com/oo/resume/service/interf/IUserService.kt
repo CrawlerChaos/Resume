@@ -11,4 +11,6 @@ import com.oo.resume.entity.User
 interface IUserService {
     fun save(user: User): User
     fun update(user: User): User
+    fun getById(id: Long): User?
+    fun getByPhone(phone: String): User?
 }

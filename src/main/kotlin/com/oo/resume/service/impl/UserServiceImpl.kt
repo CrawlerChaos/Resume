@@ -4,6 +4,7 @@ import com.oo.resume.entity.User
 import com.oo.resume.repository.UserRepository
 import com.oo.resume.service.interf.IUserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -28,6 +29,14 @@ open class UserServiceImpl : IUserService {
     override fun update(user: User): User {
         userRepo.update(user.id, user.name, user.age, user.sex, user.avatar, user.email)
         return user
+    }
+
+    override fun getById(id: Long): User? {
+        return userRepo.getOne(id)
+    }
+
+    override fun getByPhone(phone: String): User? {
+        return userRepo.findUserByPhone(phone)
     }
 
 }

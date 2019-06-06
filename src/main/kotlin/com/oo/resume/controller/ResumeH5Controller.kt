@@ -1,5 +1,6 @@
 package com.oo.resume.controller
 
+import com.oo.resume.exception.ApiError
 import com.oo.resume.service.interf.IResumeService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping
  */
 
 @Controller
-@RequestMapping("/resume/review")
+@RequestMapping("/review")
 class ResumeH5Controller {
 
     @Autowired
@@ -26,7 +27,7 @@ class ResumeH5Controller {
     @GetMapping("/{shortLink}")
     fun resume(@PathVariable(value = "shortLink", required = true) shortLink: String, model: Model): String {
         val resume = resumeService.getResumeByShortLink(shortLink)
-        if (resume == null) return "error"
+        if (resume == null) throw Exception()
         else {
             model.addAttribute("resume", resume)
             return "resume"

@@ -19,6 +19,9 @@ interface UserRepository : JpaRepository<User, Long> {
     @Query("from User user where user.id=:uuid")
     fun findUserByUUID(@Param("uuid") uuid: String): User
 
+    @Query("from User user where user.phone=:phone")
+    fun findUserByPhone(@Param("phone") phone: String): User
+
     @Modifying
     @Transactional
     @Query("update User eUser set " +
