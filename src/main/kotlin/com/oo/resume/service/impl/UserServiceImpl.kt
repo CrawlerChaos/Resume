@@ -4,6 +4,7 @@ import com.oo.resume.entity.User
 import com.oo.resume.repository.UserRepository
 import com.oo.resume.service.interf.IUserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -32,11 +33,23 @@ open class UserServiceImpl : IUserService {
     }
 
     override fun getById(id: Long): User? {
-        return userRepo.getOne(id)
+        try {
+            return userRepo.getOne(id)
+
+        } catch (e: EmptyResultDataAccessException) {
+
+        }
+        return null
     }
 
     override fun getByPhone(phone: String): User? {
-        return userRepo.findUserByPhone(phone)
+
+        try {
+            return userRepo.findUserByPhone(phone)
+        } catch (e: EmptyResultDataAccessException) {
+
+        }
+        return null
     }
 
 }

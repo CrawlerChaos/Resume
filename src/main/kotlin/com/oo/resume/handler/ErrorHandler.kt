@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import java.util.HashMap
+import javax.servlet.http.HttpServletResponse
 
 /**
  *   yangchao
@@ -31,7 +32,9 @@ class ErrorHandler {
      */
     @ExceptionHandler(ApiError::class)
     @ResponseBody
-    fun handleApiErrpr(apiError: ApiError): Map<String, Any?> {
+    fun handleApiErrpr(apiError: ApiError, response: HttpServletResponse, exception: Exception): Map<String, Any?> {
+        exception.printStackTrace()
+        response.status = apiError.code()
         return sortedMapOf(
                 "code" to apiError.code(),
                 "msg" to apiError.msg

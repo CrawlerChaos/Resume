@@ -34,10 +34,10 @@ data class User @JvmOverloads constructor(
         @Column(nullable = true)
         var avatar: String? = null,//头像
 
-        @Column(length = 32)
+        @Column(length = 64)
         var session_key: String? = null,//会话
 
-        @Column(length = 32)
+        @Column(length = 64)
         var session_user: String? = null,//会话
 
         @Id
