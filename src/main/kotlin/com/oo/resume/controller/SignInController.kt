@@ -40,7 +40,7 @@ class SignInController {
         return userService.save(user)
     }
 
-    @PostMapping("/regist")
+    @PostMapping("/login")
     @Throws(ApiError::class)
     fun login(@RequestBody loginRequest: LoginRequest?): User? {
         if (loginRequest == null) throw IlleageApiError(ApiErrorMsg.NULL_REQUEST)
