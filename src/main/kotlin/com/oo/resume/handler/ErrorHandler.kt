@@ -33,7 +33,7 @@ class ErrorHandler {
     @ResponseBody
     fun handleApiErrpr(apiError: ApiError): Map<String, Any?> {
         return sortedMapOf(
-                "code" to apiError.code,
+                "code" to apiError.code(),
                 "msg" to apiError.msg
         )
     }

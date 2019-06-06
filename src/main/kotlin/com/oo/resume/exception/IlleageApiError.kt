@@ -8,7 +8,7 @@ import com.oo.resume.constance.ApiErrorCode
  *     2019-06-06 17:11
  *
  */
-class IlleageApiError(msg: String?) : ApiError() {
+class IlleageApiError(msg: String?) : ApiError(msg) {
     override fun code(): Int {
         return ApiErrorCode.ILLEGAL_REQUEST
     }
