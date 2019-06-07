@@ -2,12 +2,10 @@ package com.oo.resume.handler
 
 import com.oo.resume.constance.PageConst
 import com.oo.resume.exception.ApiError
-import org.hibernate.annotations.common.util.impl.`Log_$logger`
-import org.springframework.stereotype.Controller
+import com.oo.resume.param.response.ErrorBody
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
-import java.util.HashMap
 import javax.servlet.http.HttpServletResponse
 
 /**
@@ -32,12 +30,9 @@ class ErrorHandler {
      */
     @ExceptionHandler(ApiError::class)
     @ResponseBody
-    fun handleApiErrpr(apiError: ApiError, response: HttpServletResponse, exception: Exception): Map<String, Any?> {
+    fun handleApiErrpr(apiError: ApiError, response: HttpServletResponse, exception: Exception): ErrorBody {
         exception.printStackTrace()
-        response.status = apiError.code()
-        return sortedMapOf(
-                "code" to apiError.code(),
-                "msg" to apiError.msg
-        )
+        response.sendError(apiError.code())
+        return apiError.body
     }
 }
