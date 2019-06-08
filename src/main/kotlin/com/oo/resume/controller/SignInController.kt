@@ -1,6 +1,8 @@
 package com.oo.resume.controller
 
 import com.oo.resume.constance.ApiErrorMsg
+import com.oo.resume.constance.UrlConst
+import com.oo.resume.constance.UrlConst.Companion.USER_UPDATE
 import com.oo.resume.entity.*
 import com.oo.resume.exception.ApiError
 import com.oo.resume.exception.IlleageApiError
@@ -19,14 +21,14 @@ import java.util.*
  *
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping(UrlConst.USER_PREFIX)
 class SignInController {
 
     @Autowired
     @Lazy
     lateinit var userService: IUserService
 
-    @PostMapping("/regist")
+    @PostMapping(UrlConst.USER_REGIST)
     @Throws(ApiError::class)
     fun regist(@RequestBody registRequest: RegistRequest?): User? {
         if (registRequest == null) throw IlleageApiError(ApiErrorMsg.NULL_REQUEST)
@@ -40,7 +42,7 @@ class SignInController {
         return userService.save(user)
     }
 
-    @PostMapping("/login")
+    @PostMapping(UrlConst.USER_LOGIN)
     @Throws(ApiError::class)
     fun login(@RequestBody loginRequest: LoginRequest?): User? {
         if (loginRequest == null) throw IlleageApiError(ApiErrorMsg.NULL_REQUEST)
@@ -54,7 +56,7 @@ class SignInController {
     }
 
 
-    @PutMapping("/update")
+    @PutMapping(UrlConst.USER_UPDATE)
     @Throws(ApiError::class)
     fun update(@RequestBody pUser: User?): User? {
         if (pUser == null) throw IlleageApiError("请求参数为空")

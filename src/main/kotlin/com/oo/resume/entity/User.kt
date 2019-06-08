@@ -11,7 +11,7 @@ import javax.persistence.*
  *
  */
 @Entity
-@Table(uniqueConstraints = [UniqueConstraint(columnNames = ["phone"])])
+@Table(uniqueConstraints = [UniqueConstraint(columnNames = ["phone", "session_user"])])
 data class User @JvmOverloads constructor(
         @Column(nullable = false, length = 16)
         var phone: String,//电话
@@ -34,10 +34,10 @@ data class User @JvmOverloads constructor(
         @Column(nullable = true)
         var avatar: String? = null,//头像
 
-        @Column(length = 64)
+        @Column(length = 36)
         var session_key: String? = null,//会话
 
-        @Column(length = 64)
+        @Column(length = 36)
         var session_user: String? = null,//会话
 
         @Id

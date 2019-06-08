@@ -1,5 +1,7 @@
 package com.oo.resume.controller
 
+import com.oo.resume.constance.UrlConst
+import com.oo.resume.constance.UrlConst.Companion.RESUME_INFO
 import com.oo.resume.entity.*
 import com.oo.resume.service.interf.IResumeService
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,20 +15,20 @@ import org.springframework.web.bind.annotation.*
  *
  */
 @RestController
-@RequestMapping("/resume")
+@RequestMapping(UrlConst.RESUME_PREFIX)
 class ResumeController {
 
     @Autowired
     @Lazy
     lateinit var resumeService: IResumeService
 
-    @GetMapping("/{userId}")
-    fun getResume(@PathVariable(value = "userId", required = true) userId: String?): Resume? {
+    @GetMapping(UrlConst.RESUME_INFO)
+    fun getResume(@PathVariable(value = UrlConst.RESUME_PARAMS_USER_ID, required = true) userId: String?): Resume? {
         return resumeService.getResumeByUserId(userId)
     }
 
-    @DeleteMapping("/delete/{resumeId}")
-    fun delete(@PathVariable(value = "resumeId", required = true) resumeId: Long?): Boolean? {
+    @DeleteMapping(UrlConst.RESUME_DELETE)
+    fun delete(@PathVariable(value = UrlConst.RESUME_PARAMS_RESUME_ID, required = true) resumeId: Long?): Boolean? {
         return resumeService.delete(resumeId)
     }
 
@@ -41,7 +43,7 @@ class ResumeController {
         val synopsis = "· 勤奋好学\n" +
                 "· 喜欢美女\n" +
                 "· 热爱打炮"
-        val baseInfo = User("18482101719", "123456", "杨冲", 23, 0,"786372615@qq.com",
+        val baseInfo = User("18482101719", "123456", "杨冲", 23, 0, "786372615@qq.com",
                 "http://www.lgstatic.com/i/image2/M01/2F/09/CgoB5lzZKZOAZFlbAABCFbmSTGs258.jpg")
 
         val edu = ArrayList<Education>()
@@ -73,7 +75,7 @@ class ResumeController {
                 "· 熟悉远程工作流程，在硅谷创新公司BorderXlab工作\n" +
                 "· 擅长Java Hook，Apt，Gradle Task挂接\n" +
                 "· 擅长MVVM架构"
-        val baseInfo = User("13550310197", "161300", "杨超", 29, 0,"382987055@qq.com",
+        val baseInfo = User("13550310197", "161300", "杨超", 29, 0, "382987055@qq.com",
                 "http://www.lgstatic.com/i/image2/M01/2F/09/CgoB5lzZKZOAZFlbAABCFbmSTGs258.jpg")
 
         val edu = ArrayList<Education>()
