@@ -14,9 +14,9 @@ interface UrlConst {
         const val RESUME_INFO = "/{${RESUME_PARAMS_USER_ID}}"
         const val RESUME_DELETE = "/delete/{${RESUME_PARAMS_RESUME_ID}}"
 
-        const val PREVIEW_PARAM_SHORT_LINK = "shortLink"
+        const val REVIEW_PARAM_SHORT_LINK = "shortLink"
         const val REVIEW_PREFIX = "/review"
-        const val REVIEW_RESUME = "/{${PREVIEW_PARAM_SHORT_LINK}}"
+        const val REVIEW_RESUME = "/{${REVIEW_PARAM_SHORT_LINK}}"
 
         const val USER_PREFIX = "/user"
         const val USER_REGIST = "/regist"

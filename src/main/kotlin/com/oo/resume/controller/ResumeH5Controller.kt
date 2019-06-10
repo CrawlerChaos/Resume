@@ -25,7 +25,7 @@ class ResumeH5Controller {
     lateinit var resumeService: IResumeService
 
     @GetMapping(UrlConst.REVIEW_RESUME)
-    fun resume(@PathVariable(value = UrlConst.PREVIEW_PARAM_SHORT_LINK, required = true) shortLink: String, model: Model): String {
+    fun resume(@PathVariable(value = UrlConst.REVIEW_PARAM_SHORT_LINK, required = true) shortLink: String, model: Model): String {
         val resume = resumeService.getResumeByShortLink(shortLink)
         if (resume == null) throw Exception()
         else {

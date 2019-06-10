@@ -5,6 +5,7 @@ import com.oo.resume.repository.*
 import com.oo.resume.service.interf.IResumeService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -77,13 +78,12 @@ open class ResumeService : IResumeService {
 
     private fun saveUser(user: User?) {
         if (user == null) return
-        var userEntity: User? = null
-        if (user.id != 0L) userEntity = userRepo.getOne(user.id)
+        var userEntity: User? = if (user.id == 0L) null else userRepo.findByIdOrNull(user.id)
         if (userEntity == null) {
             userEntity = userRepo.save(user)
-            user.session_user = userEntity.session_user
+            user.id = userEntity.id
         } else {
-            user.session_user = userEntity.session_user
+            user.id = userEntity.id
         }
     }
 

@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional
  */
 interface UserRepository : JpaRepository<User, Long> {
     @Query("from User user where user.name=:name")
-    fun findUserByName(@Param("name") name: String): User
+    fun findUserByName(@Param("name") name: String): User?
 
     @Query("from User user where user.session_user=:session_user")
-    fun findUserBySessionUser(@Param("session_user") session_user: String): User
+    fun findUserBySessionUser(@Param("session_user") session_user: String): User?
 
     @Query("from User user where user.phone=:phone")
-    fun findUserByPhone(@Param("phone") phone: String): User
+    fun findUserByPhone(@Param("phone") phone: String): User?
 
     @Modifying
     @Transactional

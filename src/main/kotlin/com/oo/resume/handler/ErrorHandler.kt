@@ -1,11 +1,10 @@
 package com.oo.resume.handler
 
-import com.oo.resume.constance.PageConst
 import com.oo.resume.exception.ApiError
 import com.oo.resume.param.response.ErrorBody
-import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import javax.servlet.http.HttpServletResponse
 
 /**
@@ -14,15 +13,15 @@ import javax.servlet.http.HttpServletResponse
  *     2019-06-06 15:58
  *
  */
-@ControllerAdvice
+@RestControllerAdvice
 class ErrorHandler {
 
     /**
-     * 统一处理h5的Exception
+     * 统一处理的Exception
      */
     @ExceptionHandler(Exception::class)
-    fun handleError(): String {
-        return PageConst.PAGE_ERROR
+    fun handleError(exception: Exception) {
+        exception.printStackTrace()
     }
 
     /**
@@ -31,8 +30,7 @@ class ErrorHandler {
     @ExceptionHandler(ApiError::class)
     @ResponseBody
     fun handleApiErrpr(apiError: ApiError, response: HttpServletResponse, exception: Exception): ErrorBody {
-        exception.printStackTrace()
-        response.sendError(apiError.code())
+        response.status = apiError.code()
         return apiError.body
     }
 }
