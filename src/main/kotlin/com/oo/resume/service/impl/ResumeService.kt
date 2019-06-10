@@ -5,7 +5,6 @@ import com.oo.resume.repository.*
 import com.oo.resume.service.interf.IResumeService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -32,7 +31,7 @@ open class ResumeService : IResumeService {
     lateinit var companyRepo: CompanyRepository
     @Autowired
     @Lazy
-    lateinit var userRepo: UserRepository
+    lateinit var accountRepo: AccountRepository
 
     override fun getResumeByUserId(id: String?): Resume? {
         if (id == null) return null
@@ -47,7 +46,6 @@ open class ResumeService : IResumeService {
     @Transactional
     override fun save(resume: Resume?): Resume? {
         if (resume == null || illLeagal(resume)) return null
-        saveUser(resume.user)
         saveCompany(resume.company)
         dealEducation(resume.education)
         dealExperience(resume.experiences)
@@ -76,16 +74,6 @@ open class ResumeService : IResumeService {
         }
     }
 
-    private fun saveUser(user: User?) {
-        if (user == null) return
-        var userEntity: User? = if (user.id == 0L) null else userRepo.findByIdOrNull(user.id)
-        if (userEntity == null) {
-            userEntity = userRepo.save(user)
-            user.id = userEntity.id
-        } else {
-            user.id = userEntity.id
-        }
-    }
 
     private fun saveCompany(company: Company?) {
         if (company == null) return

@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param
 interface ResumeRepository : JpaRepository<Resume, Long> {
 
 
-    @Query("from Resume resume where resume.user.id=:id")
+    @Query("from Resume resume where resume.getAccount.id=:id")
     fun findResumeByUserID(@Param("id") id: String): Resume?
 
     @Query("from Resume resume where resume.shortLink=:shortLink")

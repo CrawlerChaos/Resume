@@ -11,16 +11,13 @@ import javax.persistence.*
  *
  */
 @Entity
-@Table(uniqueConstraints = [UniqueConstraint(columnNames = ["phone", "session_user"])])
-data class User @JvmOverloads constructor(
-        @Column(nullable = false, length = 16)
-        var phone: String,//电话
-
-        @Column(nullable = false, length = 16)
-        var password: String,//密码
-
+@Table
+data class BaseInfo @JvmOverloads constructor(
         @Column(nullable = false, length = 16)
         var name: String,//名字
+
+        @Column(nullable = false, length = 16)
+        var phone: String,//电话
 
         @Column(nullable = true)
         var age: Int? = null,//年龄
@@ -33,12 +30,6 @@ data class User @JvmOverloads constructor(
 
         @Column(nullable = true)
         var avatar: String? = null,//头像
-
-        @Column(length = 36)
-        var session_key: String? = null,//会话
-
-        @Column(length = 36)
-        var session_user: String? = null,//会话
 
         @Id
         @GeneratedValue

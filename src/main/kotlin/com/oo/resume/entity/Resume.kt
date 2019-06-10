@@ -1,5 +1,6 @@
 package com.oo.resume.entity
 
+import org.hibernate.annotations.Cascade
 import javax.persistence.*
 
 /**
@@ -14,9 +15,13 @@ data class Resume @JvmOverloads constructor(
         @Column(nullable = false)
         var shortLink: String,//简历短链
 
-        @OneToOne(cascade = [CascadeType.MERGE,CascadeType.PERSIST])
-        @JoinColumn(name = "user_id")
-        var user: User,//基本信息
+        @ManyToOne
+        @JoinColumn(name = "account_id")
+        var account: Account,//基本信息
+
+        @OneToOne
+        @JoinColumn(name = "base_info_id")
+        var baseInfo: BaseInfo,
 
         @Column(nullable = true, columnDefinition = "text")
         var synopsis: String? = null,//个人简介
