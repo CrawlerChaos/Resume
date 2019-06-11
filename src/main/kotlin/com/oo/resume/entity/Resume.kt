@@ -1,6 +1,5 @@
 package com.oo.resume.entity
 
-import org.hibernate.annotations.Cascade
 import javax.persistence.*
 
 /**
@@ -19,7 +18,7 @@ data class Resume @JvmOverloads constructor(
         @JoinColumn(name = "account_id")
         var account: Account,//基本信息
 
-        @OneToOne
+        @OneToOne(cascade = [CascadeType.ALL])
         @JoinColumn(name = "base_info_id")
         var baseInfo: BaseInfo,
 
@@ -51,9 +50,6 @@ data class Resume @JvmOverloads constructor(
 
         @OneToMany(cascade = [CascadeType.ALL])
         @JoinColumn(name = "resume_id")
-        var education: List<Education>? = null,//教育经历
+        var education: List<Education>? = null//教育经历
 
-        @Id
-        @GeneratedValue
-        var id: Long = 0
-)
+) : BaseEntity()

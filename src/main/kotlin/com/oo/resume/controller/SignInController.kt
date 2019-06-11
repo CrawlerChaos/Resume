@@ -3,7 +3,7 @@ package com.oo.resume.controller
 import com.oo.resume.constance.ApiErrorMsg
 import com.oo.resume.constance.Regex
 import com.oo.resume.constance.UrlConst
-import com.oo.resume.entity.*
+import com.oo.resume.entity.Account
 import com.oo.resume.exception.ApiError
 import com.oo.resume.exception.IlleageApiError
 import com.oo.resume.param.request.LoginRequest
@@ -22,14 +22,14 @@ import java.util.regex.Pattern
  *
  */
 @RestController
-@RequestMapping(UrlConst.USER_PREFIX)
+@RequestMapping(UrlConst.ACCOUNT_PREFIX)
 class SignInController {
 
     @Autowired
     @Lazy
     lateinit var accountService: IAccountService
 
-    @PostMapping(UrlConst.USER_REGIST)
+    @PostMapping(UrlConst.ACCOUNT_REGIST)
     @Throws(ApiError::class)
     fun regist(@RequestBody registRequest: RegistRequest?): Account? {
         if (registRequest == null) throw IlleageApiError(ApiErrorMsg.NULL_REQUEST)
@@ -39,37 +39,43 @@ class SignInController {
         if (registRequest.name.isNullOrBlank()) throw IlleageApiError("名字不可为空")
         if (accountService.getByPhone(registRequest.phone.trim()) != null) throw IlleageApiError("电话号码已存在")
 
-        val user = Account(registRequest.phone.trim(), registRequest.password.trim(), registRequest.name.trim())
-        updateSession(user)
-        return accountService.save(user)
+        val account = Account(registRequest.phone.trim(), registRequest.password.trim(), registRequest.name.trim())
+        updateSessionUser(account)
+        updateSessionKey(account)
+        return accountService.save(account)
     }
 
-    @PostMapping(UrlConst.USER_LOGIN)
+    @PostMapping(UrlConst.ACCOUNT_LOGIN)
     @Throws(ApiError::class)
     fun login(@RequestBody loginRequest: LoginRequest?): Account? {
         if (loginRequest == null) throw IlleageApiError(ApiErrorMsg.NULL_REQUEST)
         if (loginRequest.phone.isNullOrBlank()) throw IlleageApiError("电话不可为空")
         if (loginRequest.password.isNullOrBlank()) throw IlleageApiError("密码不可为空")
 
-        val user = accountService.getByPhone(loginRequest.phone.trim())
-        if (user == null || user.password != loginRequest.password) throw IlleageApiError("用户名或密码不正确")
-        updateSession(user)
-        return accountService.save(user)
+        val account = accountService.getByPhone(loginRequest.phone.trim())
+        if (account == null || account.password != loginRequest.password) throw IlleageApiError("用户名或密码不正确")
+        updateSessionKey(account)
+        return accountService.save(account)
     }
 
 
-    @PutMapping(UrlConst.USER_UPDATE)
+    @PutMapping(UrlConst.ACCOUNT_UPDATE)
     @Throws(ApiError::class)
     fun update(@RequestBody pAccount: Account?): Account? {
         if (pAccount == null) throw IlleageApiError("请求参数为空")
-        val user = accountService.getById(pAccount.id)
-        if (user == null) throw IlleageApiError("用户不存在")
+        val account = accountService.getById(pAccount.id)
+        if (account == null) throw IlleageApiError("用户不存在")
         return accountService.update(pAccount)
     }
 
 
-    private fun updateSession(pAccount: Account) {
+    private fun updateSessionUser(pAccount: Account) {
         pAccount.session_key = UUID.randomUUID().toString()
-        pAccount.session_user = UUID.randomUUID().toString()
     }
+
+    private fun updateSessionKey(pAccount: Account) {
+        pAccount.session_key = UUID.randomUUID().toString()
+    }
+
+
 }

@@ -8,7 +8,7 @@
     <meta property="qc:admins" content="23635710066417756375"/>
     <meta name="baidu-site-verification" content="QIQ6KC1oZ6"/>
 
-    <title th:text="${resume.getAccount.name}+'-简历'"/>
+    <title th:text="${resume.baseInfo.name}+'-简历'"/>
 
     <link rel="Shortcut Icon" href="//www.lgstatic.com/www/static/common/static/favicon_faed927.ico">
 
@@ -48,13 +48,13 @@
     <div class="myresume">
         <div class="basic" id="baseInfo">
             <div class="basic-photo" data-lg-tj-id="1jit" data-lg-tj-no="0063" data-lg-tj-cid="idnull">
-                <img class="mr_headimg user-avatar" id="userpic" th:src="${resume.getAccount.avatar}" width="120"
+                <img class="mr_headimg user-avatar" id="userpic" th:src="${resume.baseInfo.avatar}" width="120"
                      height="120" alt="头像"/>
                 <!--                <img class="basic-photo_shadow" src="//www.lgstatic.com/www/static/mycenter/modules/common/img/shadow_tx_a482008.png" width="119" height="119"/>-->
             </div>
             <div class="basic-info">
                 <div class="basic-name-area">
-                    <p class="basic-name female" th:text="${resume.getAccount.name}"/>
+                    <p class="basic-name female" th:text="${resume.baseInfo.name}"/>
                     <i class="icon-sex icon-sex__male "></i>
                 </div>
                 <p>
@@ -65,14 +65,14 @@
                 <p class="basic-self">
                     <span class="basic-exp" th:text="|${resume.exeprience}年工作经验|"/>
                     <span class="basic-edu"> / 本科</span>
-                    <span class="basic-age" th:text="| / ${resume.getAccount.age}岁|"/>
+                    <span class="basic-age" th:text="| / ${resume.baseInfo.age}岁|"/>
                 </p>
                 <p>
             <span class="basic-tel">
-                <i class="basic-tel_icon"></i><span th:text="${resume.getAccount.phone}"/>
+                <i class="basic-tel_icon"></i><span th:text="${resume.baseInfo.phone}"/>
             </span>
                     <span class="basic-email">
-                <i class="basic-email_icon"></i><span th:text="${resume.getAccount.email}"/>
+                <i class="basic-email_icon"></i><span th:text="${resume.baseInfo.email}"/>
             </span>
                 </p>
             </div>

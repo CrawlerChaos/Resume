@@ -1,8 +1,9 @@
 package com.oo.resume.entity
 
-import org.hibernate.annotations.DynamicUpdate
-import org.hibernate.annotations.GenericGenerator
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
+import javax.persistence.UniqueConstraint
 
 /**
  *   yangchao
@@ -28,9 +29,6 @@ data class Account @JvmOverloads constructor(
         @Column(nullable = true)
         var sex: Int? = null,//性别 0:男 1:女
 
-        @Column(nullable = true, length = 32)
-        var email: String? = null,//邮件
-
         @Column(nullable = true)
         var avatar: String? = null,//头像
 
@@ -38,9 +36,6 @@ data class Account @JvmOverloads constructor(
         var session_key: String? = null,//会话
 
         @Column(length = 36)
-        var session_user: String? = null,//会话
+        var session_user: String? = null//会话
 
-        @Id
-        @GeneratedValue
-        var id: Long = 0
-)
+) : BaseEntity()

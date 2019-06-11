@@ -33,9 +33,11 @@ open class ResumeService : IResumeService {
     @Lazy
     lateinit var accountRepo: AccountRepository
 
-    override fun getResumeByUserId(id: String?): Resume? {
-        if (id == null) return null
-        return resumeRepo.findResumeByUserID(id)
+    override fun getResumeList(userSession: String?): List<Resume>? {
+        if (userSession == null) return null
+        val account = accountRepo.findAccountBySessionUser(userSession)
+        if (account == null) return null
+        return resumeRepo.findResumeByAccountID(account.id)
     }
 
     override fun getResumeByShortLink(shortLink: String?): Resume? {

@@ -1,6 +1,9 @@
 package com.oo.resume.entity
 
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
+import javax.persistence.UniqueConstraint
 
 /**
  *   yangchao
@@ -18,10 +21,6 @@ data class Company @JvmOverloads constructor(
         var icon: String? = null,//公司icon
 
         @Column(nullable = true)
-        var homepage: String? = null,//公司主页
+        var homepage: String? = null//公司主页
 
-        @Id
-        @GeneratedValue
-        var id: Long = 0
-
-)
+) : BaseEntity()

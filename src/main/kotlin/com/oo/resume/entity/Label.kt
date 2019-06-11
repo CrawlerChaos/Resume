@@ -1,6 +1,9 @@
 package com.oo.resume.entity
 
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
+import javax.persistence.UniqueConstraint
 
 /**
  *   yangchao
@@ -15,10 +18,6 @@ data class Label @JvmOverloads constructor(
         val name: String,//名称
 
         @Column(nullable = true)
-        var description: String? = null,//描述
+        var description: String? = null//描述
 
-        @Id
-        @GeneratedValue
-        var id: Long = 0
-
-)
+) : BaseEntity()

@@ -27,7 +27,7 @@ open class AccountServiceImpl : IAccountService {
 
     @Transactional
     override fun update(account: Account): Account {
-        accountRepo.update(account.id, account.name, account.age, account.sex, account.avatar, account.email)
+        accountRepo.update(account.id, account.name, account.age, account.sex, account.avatar)
         return account
     }
 
@@ -35,8 +35,12 @@ open class AccountServiceImpl : IAccountService {
         return accountRepo.findByIdOrNull(id)
     }
 
+    override fun getBySessionUser(sessionUser: String): Account? {
+        return accountRepo.findAccountBySessionUser(sessionUser)
+    }
+
     override fun getByPhone(phone: String): Account? {
-        return accountRepo.findUserByPhone(phone)
+        return accountRepo.findAccountByPhone(phone)
     }
 
 }

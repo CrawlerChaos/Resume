@@ -12,5 +12,6 @@ interface IAccountService {
     fun save(account: Account): Account
     fun update(account: Account): Account
     fun getById(id: Long): Account?
+    fun getBySessionUser(sessionUser: String): Account?
     fun getByPhone(phone: String): Account?
 }

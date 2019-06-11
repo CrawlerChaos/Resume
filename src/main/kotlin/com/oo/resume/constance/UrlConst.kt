@@ -18,9 +18,9 @@ interface UrlConst {
         const val REVIEW_PREFIX = "/review"
         const val REVIEW_RESUME = "/{${REVIEW_PARAM_SHORT_LINK}}"
 
-        const val USER_PREFIX = "/user"
-        const val USER_REGIST = "/regist"
-        const val USER_LOGIN = "/login"
-        const val USER_UPDATE = "/update"
+        const val ACCOUNT_PREFIX = "/account"
+        const val ACCOUNT_REGIST = "/regist"
+        const val ACCOUNT_LOGIN = "/login"
+        const val ACCOUNT_UPDATE = "/update"
     }
 }

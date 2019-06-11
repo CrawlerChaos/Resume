@@ -27,7 +27,7 @@ class ResumeH5Controller {
     @GetMapping(UrlConst.REVIEW_RESUME)
     fun resume(@PathVariable(value = UrlConst.REVIEW_PARAM_SHORT_LINK, required = true) shortLink: String, model: Model): String {
         val resume = resumeService.getResumeByShortLink(shortLink)
-        if (resume == null) throw Exception()
+        if (resume == null) return "error/404"
         else {
             model.addAttribute("resume", resume)
             return "resume"

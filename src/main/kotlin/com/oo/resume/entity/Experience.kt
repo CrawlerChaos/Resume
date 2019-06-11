@@ -14,10 +14,10 @@ data class Experience @JvmOverloads constructor(
         @JoinColumn
         var company: Company,//公司
 
-        @Column(nullable = false,columnDefinition = "text")
+        @Column(nullable = false, columnDefinition = "text")
         var sketch: String,//概述
 
-        @Column(nullable = false,columnDefinition = "text")
+        @Column(nullable = false, columnDefinition = "text")
         var jobContent: String,//工作内容
 
         @Column(nullable = false)
@@ -26,7 +26,7 @@ data class Experience @JvmOverloads constructor(
         @Column(nullable = true)
         var end: String? = null,//结束时间
 
-        @Column(nullable = true,length = 32)
+        @Column(nullable = true, length = 32)
         var station: String? = null, //岗位
 
         @OneToMany
@@ -38,8 +38,6 @@ data class Experience @JvmOverloads constructor(
         var labels: List<Label>? = null,//标签
 
         @Column(nullable = true)
-        var opus: String? = null,//作品link
+        var opus: String? = null//作品link
 
-        @Id @GeneratedValue
-        var id: Long = 0
-)
+) : BaseEntity()

@@ -9,6 +9,7 @@ package com.oo.resume.constance
 interface ApiErrorCode {
 
     companion object {
+        const val UN_AUTHORITY = 401//没有权限
         const val ILLEGAL_REQUEST = 418//请求参数不合法
         const val SERVER_EXCEPTION = 500//服务器内部错误
     }

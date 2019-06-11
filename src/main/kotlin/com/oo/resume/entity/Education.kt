@@ -1,6 +1,9 @@
 package com.oo.resume.entity
 
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 
 /**
  *   yangchao
@@ -24,9 +27,6 @@ data class Education @JvmOverloads constructor(
         var end: String?,//结束时间
 
         @Column(nullable = true, length = 32)
-        var major: String? = null,//专业
+        var major: String? = null//专业
 
-        @Id
-        @GeneratedValue
-        var id: Long = 0
-)
+) : BaseEntity()

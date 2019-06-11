@@ -1,8 +1,8 @@
 package com.oo.resume.entity
 
-import org.hibernate.annotations.DynamicUpdate
-import org.hibernate.annotations.GenericGenerator
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
 
 /**
  *   yangchao
@@ -29,9 +29,6 @@ data class BaseInfo @JvmOverloads constructor(
         var email: String? = null,//邮件
 
         @Column(nullable = true)
-        var avatar: String? = null,//头像
+        var avatar: String? = null//头像
 
-        @Id
-        @GeneratedValue
-        var id: Long = 0
-)
+) : BaseEntity()

@@ -23,11 +23,6 @@ data class School @JvmOverloads constructor(
                 joinColumns = [JoinColumn(name = "school_id")],
                 inverseJoinColumns = [JoinColumn(name = "label_id")]
         )
-        var labels: List<Label>? = null,//标签
+        var labels: List<Label>? = null//标签
 
-        @Id
-        @GeneratedValue
-        var id: Long = 0
-
-
-)
+) : BaseEntity()

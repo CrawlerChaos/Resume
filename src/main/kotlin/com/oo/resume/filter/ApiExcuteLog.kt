@@ -21,7 +21,8 @@ class ApiExcuteLog : Filter {
         if (request == null) return
         val start = System.currentTimeMillis()
         chain?.doFilter(request, response)
-        println("request=${(request as HttpServletRequest).getRequestURI()} " +
+        val serveletRequest = request as HttpServletRequest
+        println("request=${serveletRequest.getRequestURL()} " +
                 "cost=${System.currentTimeMillis() - start}ms")
     }
 

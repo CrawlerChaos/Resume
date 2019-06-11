@@ -2,8 +2,6 @@ package com.oo.resume.entity
 
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
 
 /**
  *   yangchao
@@ -20,9 +18,6 @@ data class Language @JvmOverloads constructor(
         var percent: Float? = 1f,//熟练度
 
         @Column(nullable = true)
-        var description: String? = null,//描述
+        var description: String? = null//描述
 
-        @Id
-        @GeneratedValue
-        var id: Long = 0
-)
+) : BaseEntity()

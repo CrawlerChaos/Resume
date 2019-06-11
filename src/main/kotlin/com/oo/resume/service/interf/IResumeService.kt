@@ -10,7 +10,7 @@ import com.oo.resume.entity.Resume
  */
 interface IResumeService {
     fun getResumeByShortLink(shortLink: String?): Resume?
-    fun getResumeByUserId(id: String?): Resume?
+    fun getResumeList(userSession: String?): List<Resume>?
     fun save(resume: Resume?): Resume?
     fun delete(resumeId: Long?): Boolean?
 }

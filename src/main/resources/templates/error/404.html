@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ch">
 <head>
     <title>404-Event Website Template | Home :: W3layouts</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="footer">
-        <p>&copy; 2013 404-Event. All Rights Reserved | Design by <a href="https://github.com/CrawlerChaos">CrawlerChaos</a></p>
+        <p>&copy; <span th:text="${#dates.format(new java.util.Date().getTime(),'yyyy')}"/> 404-Event. All Rights Reserved | Design by <a href="https://github.com/CrawlerChaos">CrawlerChaos</a></p>
     </div>
 </div>
 </body>
