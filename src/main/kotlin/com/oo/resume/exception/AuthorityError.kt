@@ -8,7 +8,7 @@ import com.oo.resume.constance.ApiErrorCode
  *     2019-06-06 17:11
  *
  */
-class AuthorityApiError @JvmOverloads constructor(msg: String = "无权限") : ApiError(msg) {
+class AuthorityError @JvmOverloads constructor(msg: String = "无权限") : ApiError(msg) {
     override fun code(): Int {
         return ApiErrorCode.UN_AUTHORITY
     }

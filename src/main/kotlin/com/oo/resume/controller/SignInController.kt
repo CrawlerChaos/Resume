@@ -5,7 +5,7 @@ import com.oo.resume.constance.Regex
 import com.oo.resume.constance.UrlConst
 import com.oo.resume.entity.Account
 import com.oo.resume.exception.ApiError
-import com.oo.resume.exception.IlleageApiError
+import com.oo.resume.exception.IlleageError
 import com.oo.resume.param.request.LoginRequest
 import com.oo.resume.param.request.RegistRequest
 import com.oo.resume.service.interf.IAccountService
@@ -32,12 +32,12 @@ class SignInController {
     @PostMapping(UrlConst.ACCOUNT_REGIST)
     @Throws(ApiError::class)
     fun regist(@RequestBody registRequest: RegistRequest?): Account? {
-        if (registRequest == null) throw IlleageApiError(ApiErrorMsg.NULL_REQUEST)
-        if (registRequest.phone.isNullOrBlank()) throw IlleageApiError("电话不可为空")
-        if (!Pattern.matches(Regex.MOBILE, registRequest.phone.trim())) throw IlleageApiError("电话不合法")
-        if (registRequest.password.isNullOrBlank()) throw IlleageApiError("密码不可为空")
-        if (registRequest.name.isNullOrBlank()) throw IlleageApiError("名字不可为空")
-        if (accountService.getByPhone(registRequest.phone.trim()) != null) throw IlleageApiError("电话号码已存在")
+        if (registRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
+        if (registRequest.phone.isNullOrBlank()) throw IlleageError("电话不可为空")
+        if (!Pattern.matches(Regex.MOBILE, registRequest.phone.trim())) throw IlleageError("电话不合法")
+        if (registRequest.password.isNullOrBlank()) throw IlleageError("密码不可为空")
+        if (registRequest.name.isNullOrBlank()) throw IlleageError("名字不可为空")
+        if (accountService.getByPhone(registRequest.phone.trim()) != null) throw IlleageError("电话号码已存在")
 
         val account = Account(registRequest.phone.trim(), registRequest.password.trim(), registRequest.name.trim())
         updateSessionUser(account)
@@ -48,12 +48,12 @@ class SignInController {
     @PostMapping(UrlConst.ACCOUNT_LOGIN)
     @Throws(ApiError::class)
     fun login(@RequestBody loginRequest: LoginRequest?): Account? {
-        if (loginRequest == null) throw IlleageApiError(ApiErrorMsg.NULL_REQUEST)
-        if (loginRequest.phone.isNullOrBlank()) throw IlleageApiError("电话不可为空")
-        if (loginRequest.password.isNullOrBlank()) throw IlleageApiError("密码不可为空")
+        if (loginRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
+        if (loginRequest.phone.isNullOrBlank()) throw IlleageError("电话不可为空")
+        if (loginRequest.password.isNullOrBlank()) throw IlleageError("密码不可为空")
 
         val account = accountService.getByPhone(loginRequest.phone.trim())
-        if (account == null || account.password != loginRequest.password) throw IlleageApiError("用户名或密码不正确")
+        if (account == null || account.password != loginRequest.password) throw IlleageError("用户名或密码不正确")
         updateSessionKey(account)
         return accountService.save(account)
     }
@@ -62,9 +62,9 @@ class SignInController {
     @PutMapping(UrlConst.ACCOUNT_UPDATE)
     @Throws(ApiError::class)
     fun update(@RequestBody pAccount: Account?): Account? {
-        if (pAccount == null) throw IlleageApiError("请求参数为空")
+        if (pAccount == null) throw IlleageError("请求参数为空")
         val account = accountService.getById(pAccount.id)
-        if (account == null) throw IlleageApiError("用户不存在")
+        if (account == null) throw IlleageError("用户不存在")
         return accountService.update(pAccount)
     }
 
