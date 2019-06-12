@@ -33,9 +33,9 @@ data class Account @JvmOverloads constructor(
         var avatar: String? = null,//头像
 
         @Column(length = 36)
-        var session_key: String? = null,//会话
+        var session_key: String? = null,//会话Key
 
         @Column(length = 36)
-        var session_user: String? = null//会话
+        var session_user: String? = null//会话User
 
 ) : BaseEntity()

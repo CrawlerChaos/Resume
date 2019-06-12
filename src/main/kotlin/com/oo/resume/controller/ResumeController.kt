@@ -2,6 +2,7 @@ package com.oo.resume.controller
 
 import com.oo.resume.constance.UrlConst
 import com.oo.resume.entity.*
+import com.oo.resume.exception.AuthorityError
 import com.oo.resume.param.header.HeaderConst
 import com.oo.resume.service.interf.IAccountService
 import com.oo.resume.service.interf.IResumeService
@@ -30,9 +31,9 @@ class ResumeController {
     lateinit var accountService: IAccountService
 
     @GetMapping(UrlConst.RESUME_INFO)
-    fun getResume(@PathVariable(value = UrlConst.RESUME_PARAMS_USER_ID, required = true) userId: String?, @RequestHeader headers: HttpHeaders): List<Resume>? {
+    fun getResume(@RequestHeader headers: HttpHeaders): List<Resume>? {
         val user_session = headers[HeaderConst.SESSION_USER]?.getOrNull(0)
-        if (user_session == null) return null
+        if (user_session == null) throw AuthorityError()
         return resumeService.getResumeList(user_session)
     }
 

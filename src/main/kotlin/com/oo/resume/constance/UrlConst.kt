@@ -9,9 +9,8 @@ package com.oo.resume.constance
 interface UrlConst {
     companion object {
         const val RESUME_PARAMS_RESUME_ID = "resumeId"
-        const val RESUME_PARAMS_USER_ID = "userId"
         const val RESUME_PREFIX = "/resume"
-        const val RESUME_INFO = "/{${RESUME_PARAMS_USER_ID}}"
+        const val RESUME_INFO = "/list"
         const val RESUME_DELETE = "/delete/{${RESUME_PARAMS_RESUME_ID}}"
 
         const val REVIEW_PARAM_SHORT_LINK = "shortLink"

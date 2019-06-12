@@ -16,8 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 open class WebConfig : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(SessionInterceptor()).addPathPatterns(
-                "${UrlConst.RESUME_PREFIX}/**", UrlConst.ACCOUNT_PREFIX + UrlConst.ACCOUNT_UPDATE)
+//        registry.addInterceptor(SessionInterceptor()).addPathPatterns(
+//                "${UrlConst.RESUME_PREFIX}/**", UrlConst.ACCOUNT_PREFIX + UrlConst.ACCOUNT_UPDATE)
         super.addInterceptors(registry)
     }
 }

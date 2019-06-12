@@ -32,6 +32,7 @@ class ErrorHandler {
      */
     @ExceptionHandler(ApiError::class)
     fun handleApiErrpr(apiError: ApiError, response: HttpServletResponse, exception: Exception): ErrorBody {
+        exception.printStackTrace()
         response.status = apiError.code()
         return apiError.body
     }
