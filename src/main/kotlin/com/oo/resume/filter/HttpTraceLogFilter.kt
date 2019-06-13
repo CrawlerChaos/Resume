@@ -11,7 +11,6 @@ import java.io.IOException
 import java.net.URI
 import java.net.URISyntaxException
 import java.time.LocalDateTime
-import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -104,8 +103,7 @@ class HttpTraceLogFilter : OncePerRequestFilter() {
 
     @Throws(IOException::class)
     private fun updateResponse(response: HttpServletResponse) {
-        val responseWrapper = WebUtils.getNativeResponse(response, ContentCachingResponseWrapper::class.java)
-        Objects.requireNonNull(responseWrapper)?.copyBodyToResponse()
+        WebUtils.getNativeResponse(response, ContentCachingResponseWrapper::class.java)?.copyBodyToResponse()
     }
 
     private data class HttpTraceLog(
