@@ -3,5 +3,5 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'resume'
+rootProject.name = 'Resume-BackEnd'
 
