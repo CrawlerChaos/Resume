@@ -2,13 +2,15 @@ package com.oo.resume.controller
 
 import com.oo.resume.constance.ApiErrorMsg
 import com.oo.resume.constance.Regex
-import com.oo.resume.constance.UrlConst
 import com.oo.resume.entity.Account
 import com.oo.resume.exception.ApiError
 import com.oo.resume.exception.IlleageError
+import com.oo.resume.param.path.UrlConst
 import com.oo.resume.param.request.LoginRequest
 import com.oo.resume.param.request.RegistRequest
+import com.oo.resume.param.response.AccountDTO
 import com.oo.resume.service.interf.IAccountService
+import com.oo.resume.util.BeanCovertor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
 import org.springframework.web.bind.annotation.*
@@ -31,7 +33,7 @@ class SignInController {
 
     @PostMapping(UrlConst.ACCOUNT_REGIST)
     @Throws(ApiError::class)
-    fun regist(@RequestBody registRequest: RegistRequest?): Account? {
+    fun regist(@RequestBody registRequest: RegistRequest?): AccountDTO? {
         if (registRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
         if (registRequest.phone.isNullOrBlank()) throw IlleageError("电话不可为空")
         if (!Pattern.matches(Regex.MOBILE, registRequest.phone.trim())) throw IlleageError("电话不合法")
@@ -42,12 +44,12 @@ class SignInController {
         val account = Account(registRequest.phone.trim(), registRequest.password.trim(), registRequest.name.trim())
         updateSessionUser(account)
         updateSessionKey(account)
-        return accountService.save(account)
+        return BeanCovertor.convert(accountService.save(account), AccountDTO::class.java)
     }
 
     @PostMapping(UrlConst.ACCOUNT_LOGIN)
     @Throws(ApiError::class)
-    fun login(@RequestBody loginRequest: LoginRequest?): Account? {
+    fun login(@RequestBody loginRequest: LoginRequest?): AccountDTO? {
         if (loginRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
         if (loginRequest.phone.isNullOrBlank()) throw IlleageError("电话不可为空")
         if (loginRequest.password.isNullOrBlank()) throw IlleageError("密码不可为空")
@@ -55,17 +57,17 @@ class SignInController {
         val account = accountService.getByPhone(loginRequest.phone.trim())
         if (account == null || account.password != loginRequest.password) throw IlleageError("用户名或密码不正确")
         updateSessionKey(account)
-        return accountService.save(account)
+        return BeanCovertor.convert(accountService.save(account), AccountDTO::class.java)
     }
 
 
     @PutMapping(UrlConst.ACCOUNT_UPDATE)
     @Throws(ApiError::class)
-    fun update(@RequestBody pAccount: Account?): Account? {
+    fun update(@RequestBody pAccount: Account?): AccountDTO? {
         if (pAccount == null) throw IlleageError("请求参数为空")
         val account = accountService.getById(pAccount.id)
         if (account == null) throw IlleageError("用户不存在")
-        return accountService.update(pAccount)
+        return BeanCovertor.convert(accountService.update(pAccount), AccountDTO::class.java)
     }
 
 

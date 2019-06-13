@@ -1,16 +1,20 @@
 package com.oo.resume.controller
 
-import com.oo.resume.constance.UrlConst
 import com.oo.resume.entity.*
 import com.oo.resume.exception.AuthorityError
 import com.oo.resume.param.header.HeaderConst
+import com.oo.resume.param.path.UrlConst
+import com.oo.resume.param.response.ResumeDTO
 import com.oo.resume.service.interf.IAccountService
 import com.oo.resume.service.interf.IResumeService
+import com.oo.resume.util.BeanCovertor
+import org.modelmapper.TypeToken
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
 import org.springframework.http.HttpHeaders
 import org.springframework.web.bind.annotation.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  *   yangchao
@@ -30,11 +34,12 @@ class ResumeController {
     @Lazy
     lateinit var accountService: IAccountService
 
-    @GetMapping(UrlConst.RESUME_INFO)
-    fun getResume(@RequestHeader headers: HttpHeaders): List<Resume>? {
+
+    @GetMapping(UrlConst.RESUME_LIST)
+    fun getResumeList(@RequestHeader headers: HttpHeaders): List<ResumeDTO>? {
         val user_session = headers[HeaderConst.SESSION_USER]?.getOrNull(0)
         if (user_session == null) throw AuthorityError()
-        return resumeService.getResumeList(user_session)
+        return BeanCovertor.convert(resumeService.getResumeList(user_session), object : TypeToken<List<ResumeDTO>>() {}.type)
     }
 
     @DeleteMapping(UrlConst.RESUME_DELETE)
@@ -93,7 +98,7 @@ class ResumeController {
                 "· 擅长Java Hook，Apt，Gradle Task挂接\n" +
                 "· 擅长MVVM架构"
         val account = Account("13550310197", "161300", "杨超", 29, 0, "382987055@qq.com",
-                UUID.randomUUID().toString(), UUID.randomUUID().toString())
+                "3e1a2702-191b-4f71-ae08-99ab14722c95", "269fef2a-e9e9-44bf-863f-9c9514fe1066")
 
         val edu = ArrayList<Education>()
         edu.add(Education(School("电子科技大学", "http://www.lgstatic.com/images/schoolBadge/1014f6789b8e41bc8c904a3c4d0a1854.jpeg",
@@ -131,7 +136,7 @@ class ResumeController {
         professionalExperiences.add(Experience(Company("MBPジャパン株式会社", "/images/logo_mbp.jpg", "http://www.mbpsoft.co.jp/"),
                 "面向中国国内和日本客户提供系统应用开发，基于大型ERP系统的二次开发等离岸外包服务及BPO服务", "东芝プロジェクト(帐票开発)负责<试算表>＜损益表＞等开发，以及测试式样书撰写，单体测试以及结合测试。",
                 "2012.06", "2014.03", "Java开发工程师",
-                arrayListOf()))//"SVF", "JDE", "Spring MVC"
+                null))//"SVF", "JDE", "Spring MVC"
 
         return Resume("yangchao", account, baseInfo, synopsis, 7, Company("美团点评"), "Android", language, technique, professionalExperiences, edu)
     }

@@ -1,7 +1,5 @@
 package com.oo.resume
 
-import com.oo.resume.constance.UrlConst
-import com.oo.resume.interceptor.SessionInterceptor
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer

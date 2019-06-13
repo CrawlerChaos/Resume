@@ -1,6 +1,6 @@
 package com.oo.resume.controller
 
-import com.oo.resume.constance.UrlConst
+import com.oo.resume.param.path.UrlConst
 import com.oo.resume.service.interf.IResumeService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy

@@ -1,4 +1,4 @@
-package com.oo.resume.constance
+package com.oo.resume.param.path
 
 /**
  *   yangchao
@@ -10,12 +10,12 @@ interface UrlConst {
     companion object {
         const val RESUME_PARAMS_RESUME_ID = "resumeId"
         const val RESUME_PREFIX = "/resume"
-        const val RESUME_INFO = "/list"
-        const val RESUME_DELETE = "/delete/{${RESUME_PARAMS_RESUME_ID}}"
+        const val RESUME_LIST = "/list"
+        const val RESUME_DELETE = "/delete/{$RESUME_PARAMS_RESUME_ID}"
 
         const val REVIEW_PARAM_SHORT_LINK = "shortLink"
         const val REVIEW_PREFIX = "/review"
-        const val REVIEW_RESUME = "/{${REVIEW_PARAM_SHORT_LINK}}"
+        const val REVIEW_RESUME = "/{$REVIEW_PARAM_SHORT_LINK}"
 
         const val ACCOUNT_PREFIX = "/account"
         const val ACCOUNT_REGIST = "/regist"
