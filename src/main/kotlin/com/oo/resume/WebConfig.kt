@@ -1,5 +1,8 @@
 package com.oo.resume
 
+import com.oo.resume.interceptor.SessionInterceptor
+import com.oo.resume.param.path.UrlConst
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -13,9 +16,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @Configuration
 open class WebConfig : WebMvcConfigurer {
 
+    @Bean
+    open fun createSessionInterceptor(): SessionInterceptor {
+        return SessionInterceptor()
+    }
+
     override fun addInterceptors(registry: InterceptorRegistry) {
-//        registry.addInterceptor(SessionInterceptor()).addPathPatterns(
-//                "${UrlConst.RESUME_PREFIX}/**", UrlConst.ACCOUNT_PREFIX + UrlConst.ACCOUNT_UPDATE)
+        registry.addInterceptor(createSessionInterceptor()).addPathPatterns(
+                "${UrlConst.RESUME_PREFIX}/**", UrlConst.ACCOUNT_PREFIX + UrlConst.ACCOUNT_UPDATE)
         super.addInterceptors(registry)
     }
 }
