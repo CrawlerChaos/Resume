@@ -38,13 +38,16 @@ class SignInController {
     @Throws(ApiError::class)
     fun regist(@RequestBody registRequest: RegistRequest?): AccountDTO? {
         if (registRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
-        if (registRequest.phone.isNullOrBlank()) throw IlleageError("电话不可为空")
-        if (!Pattern.matches(Regex.MOBILE, registRequest.phone.trim())) throw IlleageError("电话不合法")
-        if (registRequest.password.isNullOrBlank()) throw IlleageError("密码不可为空")
-        if (registRequest.name.isNullOrBlank()) throw IlleageError("名字不可为空")
-        if (accountService.getByPhone(registRequest.phone.trim()) != null) throw IlleageError("电话号码已存在")
+        val phone = registRequest.phone
+        if (phone.isNullOrBlank()) throw IlleageError("电话不可为空")
+        if (!Pattern.matches(Regex.MOBILE, phone.trim())) throw IlleageError("电话不合法")
+        val password = registRequest.password
+        if (password.isNullOrBlank()) throw IlleageError("密码不可为空")
+        val name = registRequest.name
+        if (name.isNullOrBlank()) throw IlleageError("名字不可为空")
+        if (Objects.nonNull(accountService.getByPhone(phone.trim()))) throw IlleageError("电话号码已存在")
 
-        val account = Account(registRequest.phone.trim(), registRequest.password.trim(), registRequest.name.trim())
+        val account = Account(phone.trim(), password.trim(), name.trim())
         updateSessionUser(account)
         updateSessionKey(account)
         return BeanCovertor.convert(accountService.save(account), AccountDTO::class.java)
@@ -54,11 +57,12 @@ class SignInController {
     @Throws(ApiError::class)
     fun login(@RequestBody loginRequest: LoginRequest?): AccountDTO? {
         if (loginRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
-        if (loginRequest.phone.isNullOrBlank()) throw IlleageError("电话不可为空")
-        if (loginRequest.password.isNullOrBlank()) throw IlleageError("密码不可为空")
-
-        val account = accountService.getByPhone(loginRequest.phone.trim())
-        if (account == null || account.password != loginRequest.password) throw IlleageError("用户名或密码不正确")
+        val phone = loginRequest.phone
+        if (phone.isNullOrBlank()) throw IlleageError("电话不可为空")
+        val password = loginRequest.password
+        if (password.isNullOrBlank()) throw IlleageError("密码不可为空")
+        val account = accountService.getByPhone(phone.trim())
+        if (account == null || account.password != password) throw IlleageError("用户名或密码不正确")
         updateSessionKey(account)
         return BeanCovertor.convert(accountService.save(account), AccountDTO::class.java)
     }
