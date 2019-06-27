@@ -4,7 +4,9 @@ import com.oo.resume.constance.ApiErrorMsg
 import com.oo.resume.constance.Regex
 import com.oo.resume.entity.Account
 import com.oo.resume.exception.ApiError
+import com.oo.resume.exception.AuthorityError
 import com.oo.resume.exception.IlleageError
+import com.oo.resume.param.header.HeaderConst
 import com.oo.resume.param.path.UrlConst
 import com.oo.resume.param.request.LoginRequest
 import com.oo.resume.param.request.RegistRequest
@@ -13,6 +15,7 @@ import com.oo.resume.service.interf.IAccountService
 import com.oo.resume.util.BeanCovertor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
+import org.springframework.http.HttpHeaders
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import java.util.regex.Pattern
@@ -63,13 +66,15 @@ class SignInController {
 
     @PutMapping(UrlConst.ACCOUNT_UPDATE)
     @Throws(ApiError::class)
-    fun update(@RequestBody pAccount: Account?): AccountDTO? {
+    fun update(@RequestBody pAccount: Account?, @RequestHeader headers: HttpHeaders): AccountDTO? {
+        val user_session = headers[HeaderConst.SESSION_USER]?.getOrNull(0)
+        if (user_session == null) throw AuthorityError()
         if (pAccount == null) throw IlleageError("请求参数为空")
-        val account = accountService.getById(pAccount.id)
+        val account = accountService.getBySessionUser(user_session)
         if (account == null) throw IlleageError("用户不存在")
-        return BeanCovertor.convert(accountService.update(pAccount), AccountDTO::class.java)
+        BeanCovertor.copyProperties(pAccount, account, true, "id")
+        return BeanCovertor.convert(accountService.save(account), AccountDTO::class.java)
     }
-
 
     private fun updateSessionUser(pAccount: Account) {
         pAccount.session_key = UUID.randomUUID().toString()

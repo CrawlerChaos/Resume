@@ -20,13 +20,13 @@ interface AccountRepository : JpaRepository<Account, Long> {
     @Query("from Account user where user.phone=:phone")
     fun findAccountByPhone(@Param("phone") phone: String): Account?
 
-    @Modifying
-    @Query("update Account eUser set " +
-            "eUser.name = CASE WHEN :name IS NULL THEN eUser.name ELSE :name END ," +
-            "eUser.age = CASE WHEN :age IS NULL THEN eUser.age ELSE :age END ," +
-            "eUser.sex = CASE WHEN :sex IS NULL THEN eUser.sex ELSE :sex END ," +
-            "eUser.avatar = CASE WHEN :avatar IS NULL THEN eUser.avatar ELSE :avatar END " +
-            "where eUser.id = :id")
-    fun update(@Param("id") id: Long?, @Param("name") name: String?, @Param("age") age: Int?,
-               @Param("sex") sex: Int?, @Param("avatar") avatar: String?)
+//    @Modifying
+//    @Query("update Account eUser set " +
+//            "eUser.name = CASE WHEN :name IS NULL THEN eUser.name ELSE :name END ," +
+//            "eUser.age = CASE WHEN :age IS NULL THEN eUser.age ELSE :age END ," +
+//            "eUser.sex = CASE WHEN :sex IS NULL THEN eUser.sex ELSE :sex END ," +
+//            "eUser.avatar = CASE WHEN :avatar IS NULL THEN eUser.avatar ELSE :avatar END " +
+//            "where eUser.id = :id")
+//    fun update(@Param("id") id: Long?, @Param("name") name: String?, @Param("age") age: Int?,
+//               @Param("sex") sex: Int?, @Param("avatar") avatar: String?)
 }

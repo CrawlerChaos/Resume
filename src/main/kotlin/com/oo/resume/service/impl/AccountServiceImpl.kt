@@ -6,7 +6,6 @@ import com.oo.resume.service.interf.IAccountService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 /**
  *   yangchao
@@ -25,11 +24,11 @@ open class AccountServiceImpl : IAccountService {
         return accountRepo.save(account)
     }
 
-    @Transactional
-    override fun update(account: Account): Account {
-        accountRepo.update(account.id, account.name, account.age, account.sex, account.avatar)
-        return account
-    }
+//    @Transactional
+//    override fun update(account: Account): Account {
+//        accountRepo.update(account.id, account.name, account.age, account.sex, account.avatar)
+//        return account
+//    }
 
     override fun getById(id: Long): Account? {
         return accountRepo.findByIdOrNull(id)
