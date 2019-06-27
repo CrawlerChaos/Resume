@@ -6,11 +6,11 @@ import com.oo.resume.entity.Account
 import com.oo.resume.exception.ApiError
 import com.oo.resume.exception.AuthorityError
 import com.oo.resume.exception.IlleageError
-import com.oo.resume.param.header.HeaderConst
-import com.oo.resume.param.path.UrlConst
-import com.oo.resume.param.request.LoginRequest
-import com.oo.resume.param.request.RegistRequest
-import com.oo.resume.param.response.AccountDTO
+import com.oo.resume.data.header.HeaderConst
+import com.oo.resume.data.path.UrlConst
+import com.oo.resume.data.request.LoginRequest
+import com.oo.resume.data.request.RegistRequest
+import com.oo.resume.data.response.AccountDTO
 import com.oo.resume.service.interf.IAccountService
 import com.oo.resume.util.BeanCovertor
 import org.springframework.beans.factory.annotation.Autowired

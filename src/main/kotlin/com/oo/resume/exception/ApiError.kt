@@ -1,6 +1,6 @@
 package com.oo.resume.exception
 
-import com.oo.resume.param.response.ErrorBody
+import com.oo.resume.data.response.ErrorBody
 
 /**
  *   yangchao

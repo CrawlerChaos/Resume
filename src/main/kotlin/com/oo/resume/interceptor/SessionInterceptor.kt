@@ -1,10 +1,9 @@
 package com.oo.resume.interceptor
 
 import com.oo.resume.exception.AuthorityError
-import com.oo.resume.param.header.HeaderConst
+import com.oo.resume.data.header.HeaderConst
 import com.oo.resume.service.interf.IAccountService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Configurable
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 import javax.servlet.http.HttpServletRequest

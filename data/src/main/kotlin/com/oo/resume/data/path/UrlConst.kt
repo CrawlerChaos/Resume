@@ -1,4 +1,4 @@
-package com.oo.resume.param.path
+package com.oo.resume.data.path
 
 /**
  *   yangchao

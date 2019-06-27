@@ -2,9 +2,9 @@ package com.oo.resume.controller
 
 import com.oo.resume.entity.*
 import com.oo.resume.exception.AuthorityError
-import com.oo.resume.param.header.HeaderConst
-import com.oo.resume.param.path.UrlConst
-import com.oo.resume.param.response.ResumeDTO
+import com.oo.resume.data.header.HeaderConst
+import com.oo.resume.data.path.UrlConst
+import com.oo.resume.data.response.ResumeDTO
 import com.oo.resume.service.interf.IAccountService
 import com.oo.resume.service.interf.IResumeService
 import com.oo.resume.util.BeanCovertor

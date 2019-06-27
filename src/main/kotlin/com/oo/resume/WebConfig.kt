@@ -1,7 +1,7 @@
 package com.oo.resume
 
 import com.oo.resume.interceptor.SessionInterceptor
-import com.oo.resume.param.path.UrlConst
+import com.oo.resume.data.path.UrlConst
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
