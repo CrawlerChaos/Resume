@@ -12,21 +12,21 @@ import javax.persistence.*
 data class Resume @JvmOverloads constructor(
 
         @Column(nullable = false)
-        var shortLink: String,//简历短链
+        var shortLink: String? = null,//简历短链
 
         @ManyToOne
         @JoinColumn(name = "account_id")
-        var account: Account,//基本信息
+        var account: Account? = null,//基本信息
 
         @OneToOne(cascade = [CascadeType.ALL])
         @JoinColumn(name = "base_info_id")
-        var baseInfo: BaseInfo,
+        var baseInfo: BaseInfo? = null,
 
         @Column(nullable = true, columnDefinition = "text")
         var synopsis: String? = null,//个人简介
 
         @Column(nullable = false)
-        var exeprience: Int,//多少年经验
+        var exeprience: Int? = null,//多少年经验
 
         @OneToOne
         @JoinColumn(name = "company_id", nullable = true)

@@ -45,9 +45,14 @@ open class ResumeService : IResumeService {
         return resumeRepo.findResumeByShortLink(shortLink);
     }
 
+    override fun getResumeByID(id: Long?): Resume? {
+        if (id == null) return null
+        return resumeRepo.getOne(id);
+    }
+
     @Transactional
-    override fun save(resume: Resume?): Resume? {
-        if (resume == null || illLeagal(resume)) return null
+    override fun createOrUpdate(resume: Resume?): Resume? {
+        if (resume == null) return null
         saveCompany(resume.company)
         dealEducation(resume.education)
         dealExperience(resume.experiences)
@@ -60,10 +65,6 @@ open class ResumeService : IResumeService {
         return true
     }
 
-    private fun illLeagal(resume: Resume): Boolean {
-        if (resumeRepo.findResumeByShortLink(resume.shortLink) != null) return true
-        return false
-    }
 
     private fun dealEducation(eductaions: List<Education>?) {
         eductaions?.forEach { education -> mergeSchool(education.school) }
