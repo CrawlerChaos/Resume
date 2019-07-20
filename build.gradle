@@ -33,8 +33,13 @@ bootJar {
 noArg {
     annotation("javax.persistence.Entity")
 }
-
-
+sourceSets {
+    main {
+        kotlin {
+            srcDirs = ['src/main/kotlin', 'src/main/data']
+        }
+    }
+}
 group = 'com.oo'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = "$jdk_version"
