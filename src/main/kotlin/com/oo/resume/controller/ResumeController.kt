@@ -1,8 +1,11 @@
 package com.oo.resume.controller
 
+import com.oo.resume.context.Context
+import com.oo.resume.context.ContextPreference
 import com.oo.resume.data.header.HeaderConst
 import com.oo.resume.data.path.UrlConst
 import com.oo.resume.data.response.ResumeDTO
+import com.oo.resume.entity.Account
 import com.oo.resume.entity.Resume
 import com.oo.resume.exception.AuthorityError
 import com.oo.resume.exception.IlleageError
@@ -36,21 +39,17 @@ class ResumeController {
 
     @GetMapping(UrlConst.RESUME_LIST)
     fun getResumeList(@RequestHeader headers: HttpHeaders): List<ResumeDTO>? {
-        val user_session = headers[HeaderConst.SESSION_USER]?.getOrNull(0)
-        if (user_session == null) throw AuthorityError()
-        return BeanCovertor.convert(resumeService.getResumeList(user_session), object : TypeToken<List<ResumeDTO>>() {}.type)
+        return BeanCovertor.convert(resumeService.getResumeList(ContextPreference.getAccount()?.session_user), object : TypeToken<List<ResumeDTO>>() {}.type)
     }
 
     @PostMapping(UrlConst.RESUME_CREATE_OR_UPDATE)
-    fun createOrUpdate(@RequestBody pResume: ResumeDTO?, @RequestHeader headers: HttpHeaders): ResumeDTO? {
-        val user_session = headers[HeaderConst.SESSION_USER]?.getOrNull(0)
-        if (user_session == null) throw AuthorityError()
+    fun createOrUpdate(@RequestBody pResume: ResumeDTO?): ResumeDTO? {
         if (pResume == null) throw IlleageError("请求参数为空")
         if (pResume.shortLink.isNullOrBlank()) throw IlleageError("短连接不合法")
         val resumeEntity = resumeService.getResumeByShortLink(pResume.shortLink)
         if (pResume.id != null) {
             if (resumeEntity == null) throw IlleageError("简历不存在")
-            resumeSecurityValid(user_session, resumeEntity.account?.session_user)
+            resumeSecurityValid(ContextPreference.getAccount().session_user, resumeEntity.account?.session_user)
         }
         shortLinkExistValid(pResume.shortLink, resumeEntity?.shortLink, pResume.id == null)
         val saveEntity = Resume()
@@ -60,12 +59,10 @@ class ResumeController {
 
     @GetMapping(UrlConst.RESUME_DETAIL)
     fun getResumeDetail(@PathVariable(value = UrlConst.RESUME_PARAMS_RESUME_ID, required = true) resumeId: Long?, @RequestHeader headers: HttpHeaders): List<ResumeDTO>? {
-        val user_session = headers[HeaderConst.SESSION_USER]?.getOrNull(0)
-        if (user_session == null) throw AuthorityError()
         if (resumeId == null) throw IlleageError("参数不合法")
         val resumeEntity = resumeService.getResumeByID(resumeId)
         if (resumeEntity == null) throw IlleageError("简历不存在")
-        resumeSecurityValid(user_session, resumeEntity.account?.session_user)
+        resumeSecurityValid(ContextPreference.getAccount()?.session_user, resumeEntity.account?.session_user)
         return BeanCovertor.convert(resumeEntity, ResumeDTO::class.java)
     }
 

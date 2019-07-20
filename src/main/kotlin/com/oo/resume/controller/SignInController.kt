@@ -2,15 +2,14 @@ package com.oo.resume.controller
 
 import com.oo.resume.constance.ApiErrorMsg
 import com.oo.resume.constance.Regex
-import com.oo.resume.entity.Account
-import com.oo.resume.exception.ApiError
-import com.oo.resume.exception.AuthorityError
-import com.oo.resume.exception.IlleageError
-import com.oo.resume.data.header.HeaderConst
+import com.oo.resume.context.ContextPreference
 import com.oo.resume.data.path.UrlConst
 import com.oo.resume.data.request.LoginRequest
 import com.oo.resume.data.request.RegistRequest
 import com.oo.resume.data.response.AccountDTO
+import com.oo.resume.entity.Account
+import com.oo.resume.exception.ApiError
+import com.oo.resume.exception.IlleageError
 import com.oo.resume.service.interf.IAccountService
 import com.oo.resume.util.BeanCovertor
 import org.springframework.beans.factory.annotation.Autowired
@@ -71,11 +70,8 @@ class SignInController {
     @PutMapping(UrlConst.ACCOUNT_UPDATE)
     @Throws(ApiError::class)
     fun update(@RequestBody pAccount: Account?, @RequestHeader headers: HttpHeaders): AccountDTO? {
-        val user_session = headers[HeaderConst.SESSION_USER]?.getOrNull(0)
-        if (user_session == null) throw AuthorityError()
         if (pAccount == null) throw IlleageError("请求参数为空")
-        val account = accountService.getBySessionUser(user_session)
-        if (account == null) throw IlleageError("用户不存在")
+        var account = ContextPreference.getAccount()
         BeanCovertor.copyProperties(pAccount, account, true, "id")
         return BeanCovertor.convert(accountService.save(account), AccountDTO::class.java)
     }

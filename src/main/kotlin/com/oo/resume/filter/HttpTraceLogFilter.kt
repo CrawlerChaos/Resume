@@ -1,6 +1,7 @@
 package com.oo.resume.filter
 
 import com.oo.resume.util.JsonUtil
+import com.oo.resume.util.Logger
 import io.micrometer.core.instrument.util.IOUtils
 import org.springframework.http.HttpStatus
 import org.springframework.web.filter.OncePerRequestFilter
@@ -46,7 +47,7 @@ class HttpTraceLogFilter : OncePerRequestFilter() {
         } finally {
             val path = request.getRequestURI()
             val requestBody = IOUtils.toString(request.getInputStream(), Charsets.UTF_8)
-            logger.info(requestBody)
+            Logger.info(requestBody)
             //1. 记录日志
             val traceLog = HttpTraceLog()
             traceLog.path = path
@@ -56,9 +57,9 @@ class HttpTraceLogFilter : OncePerRequestFilter() {
             traceLog.time = LocalDateTime.now().toString()
             traceLog.parameterMap = JsonUtil.generate(request.getParameterMap())
             traceLog.status = status
-            logger.info("\n------------Execute------------\n" + JsonUtil.pretty(traceLog))
-            logger.info("\n------------Request Body------------\n" + JsonUtil.pretty(getRequestBody(request)))
-            logger.info("\n------------Response Body------------\n" + JsonUtil.pretty(getResponseBody(response)))
+            Logger.info("\n------------Execute------------\n" + JsonUtil.pretty(traceLog))
+            Logger.info("\n------------Request Body------------\n" + JsonUtil.pretty(getRequestBody(request)))
+            Logger.info("\n------------Response Body------------\n" + JsonUtil.pretty(getResponseBody(response)))
             updateResponse(response)
         }
     }
