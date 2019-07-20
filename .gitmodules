@@ -1,0 +1,3 @@
+[submodule "src/main/data"]
+	path = src/main/data
+	url = git@github.com:CrawlerChaos/ResumeData.git
