@@ -13,5 +13,5 @@ import org.springframework.data.repository.query.Param
  */
 interface LabelRepository : JpaRepository<Label, Long> {
     @Query("from Label label where label.name=:name")
-    fun findLabelByName(@Param("name") name: String): Label?
+    fun findByName(@Param("name") name: String): Label?
 }

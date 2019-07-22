@@ -15,6 +15,6 @@ interface CompanyRepository : JpaRepository<Company, Long> {
 
 
     @Query("from Company company where company.name=:name")
-    fun findCompanyByName(@Param("name") name: String): Company?
+    fun findByName(@Param("name") name: String): Company?
 
 }

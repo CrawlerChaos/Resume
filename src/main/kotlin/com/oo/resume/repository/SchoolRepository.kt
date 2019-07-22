@@ -15,6 +15,6 @@ interface SchoolRepository : JpaRepository<School, Long> {
 
 
     @Query("from School school where school.name=:name")
-    fun findSchoolByName(@Param("name") name: String): School?
+    fun findByName(@Param("name") name: String): School?
 
 }

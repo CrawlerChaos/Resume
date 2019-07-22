@@ -4,7 +4,6 @@ import com.oo.resume.entity.Account
 import com.oo.resume.repository.AccountRepository
 import com.oo.resume.service.interf.IAccountService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 /**
@@ -30,16 +29,12 @@ open class AccountServiceImpl : IAccountService {
 //        return account
 //    }
 
-    override fun getById(id: Long): Account? {
-        return accountRepo.findByIdOrNull(id)
-    }
-
     override fun getBySessionUser(sessionUser: String): Account? {
-        return accountRepo.findAccountBySessionUser(sessionUser)
+        return accountRepo.findBySessionUser(sessionUser)
     }
 
     override fun getByPhone(phone: String): Account? {
-        return accountRepo.findAccountByPhone(phone)
+        return accountRepo.findByPhone(phone)
     }
 
 }

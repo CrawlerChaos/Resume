@@ -11,7 +11,6 @@ import com.oo.resume.util.BeanCovertor
 import org.modelmapper.TypeToken
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
-import org.springframework.http.HttpHeaders
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -34,7 +33,7 @@ class ResumeController {
 
 
     @GetMapping(UrlConst.RESUME_LIST)
-    fun getResumeList(@RequestHeader headers: HttpHeaders): List<ResumeDTO>? {
+    fun getResumeList(): List<ResumeDTO>? {
         return BeanCovertor.convert(resumeService.getResumeList(ContextPreference.getAccount().id), object : TypeToken<List<ResumeDTO>>() {}.type)
     }
 
@@ -54,7 +53,7 @@ class ResumeController {
     }
 
     @GetMapping(UrlConst.RESUME_DETAIL)
-    fun getResumeDetail(@PathVariable(value = UrlConst.RESUME_PARAMS_RESUME_ID, required = true) resumeId: Long?, @RequestHeader headers: HttpHeaders): List<ResumeDTO>? {
+    fun getResumeDetail(@PathVariable(value = UrlConst.RESUME_PARAMS_RESUME_ID, required = true) resumeId: Long?): List<ResumeDTO>? {
         if (resumeId == null) throw IlleageError("参数不合法")
         val resumeEntity = resumeService.getResumeByID(resumeId, ContextPreference.getAccount().id)
         if (resumeEntity == null) throw IlleageError("简历不存在")

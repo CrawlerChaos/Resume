@@ -78,7 +78,7 @@ open class ResumeService : IResumeService {
 
     private fun saveCompany(company: Company?) {
         if (company == null) return
-        var companyEntity = companyRepo.findCompanyByName(company.name)
+        var companyEntity = companyRepo.findByName(company.name)
         if (companyEntity == null) {
             companyEntity = companyRepo.save(company)
         }
@@ -88,7 +88,7 @@ open class ResumeService : IResumeService {
     private fun mergeSchool(school: School?) {
         if (school == null) return
         school.labels?.forEach { label -> mergeLabel(label) }
-        var schoolEntity = schoolRepo.findSchoolByName(school.name)
+        var schoolEntity = schoolRepo.findByName(school.name)
         if (schoolEntity == null) {
             schoolEntity = schoolRepo.save(school)
         }
@@ -97,7 +97,7 @@ open class ResumeService : IResumeService {
 
     private fun mergeLabel(label: Label?) {
         if (label == null) return
-        var labelEntity = labelRepo.findLabelByName(label.name)
+        var labelEntity = labelRepo.findByName(label.name)
         if (labelEntity == null) {
             labelEntity = labelRepo.save(label)
         }

@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional
 interface AccountRepository : JpaRepository<Account, Long> {
 
     @Query("from Account user where user.session_user=:session_user")
-    fun findAccountBySessionUser(@Param("session_user") session_user: String): Account?
+    fun findBySessionUser(@Param("session_user") session_user: String): Account?
 
     @Query("from Account user where user.phone=:phone")
-    fun findAccountByPhone(@Param("phone") phone: String): Account?
+    fun findByPhone(@Param("phone") phone: String): Account?
 
 //    @Modifying
 //    @Query("update Account eUser set " +
