@@ -33,21 +33,19 @@ open class ResumeService : IResumeService {
     @Lazy
     lateinit var accountRepo: AccountRepository
 
-    override fun getResumeList(userSession: String?): List<Resume>? {
-        if (userSession == null) return null
-        val account = accountRepo.findAccountBySessionUser(userSession)
-        if (account == null) return null
-        return resumeRepo.findResumeByAccountID(account.id)
+    override fun getResumeList(accountID: Long?): List<Resume>? {
+        if (accountID == null) return null
+        return resumeRepo.findAllByAccountID(accountID)
     }
 
     override fun getResumeByShortLink(shortLink: String?): Resume? {
         if (shortLink == null) return null
-        return resumeRepo.findResumeByShortLink(shortLink);
+        return resumeRepo.findByShortLink(shortLink)
     }
 
-    override fun getResumeByID(id: Long?): Resume? {
-        if (id == null) return null
-        return resumeRepo.getOne(id);
+    override fun getResumeByID(id: Long?, accountID: Long?): Resume? {
+        if (id == null || accountID == null) return null
+        return resumeRepo.findResumeByID(id, accountID)
     }
 
     @Transactional
@@ -59,10 +57,10 @@ open class ResumeService : IResumeService {
         return resumeRepo.save(resume)
     }
 
-    override fun delete(resumeId: Long?): Boolean? {
-        if (resumeId == null) return false
-        resumeRepo.deleteById(resumeId)
-        return true
+    override fun delete(resumeId: Long?, accountID: Long?): Boolean? {
+        if (resumeId == null || accountID == null) return false
+        val resume = resumeRepo.deleteResume(resumeId, accountID)
+        return resume != null
     }
 
 

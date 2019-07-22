@@ -10,8 +10,8 @@ import com.oo.resume.entity.Resume
  */
 interface IResumeService {
     fun getResumeByShortLink(shortLink: String?): Resume?
-    fun getResumeByID(id: Long?): Resume?
-    fun getResumeList(userSession: String?): List<Resume>?
+    fun getResumeByID(id: Long?, accountID: Long?): Resume?
+    fun getResumeList(accountID: Long?): List<Resume>?
     fun createOrUpdate(resume: Resume?): Resume?
-    fun delete(resumeId: Long?): Boolean?
+    fun delete(resumeId: Long?, accountID: Long?): Boolean?
 }

@@ -14,7 +14,6 @@ import com.oo.resume.service.interf.IAccountService
 import com.oo.resume.util.BeanCovertor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
-import org.springframework.http.HttpHeaders
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import java.util.regex.Pattern
@@ -69,7 +68,7 @@ class SignInController {
 
     @PutMapping(UrlConst.ACCOUNT_UPDATE)
     @Throws(ApiError::class)
-    fun update(@RequestBody pAccount: Account?, @RequestHeader headers: HttpHeaders): AccountDTO? {
+    fun update(@RequestBody pAccount: Account?): AccountDTO? {
         if (pAccount == null) throw IlleageError("请求参数为空")
         var account = ContextPreference.getAccount()
         BeanCovertor.copyProperties(pAccount, account, true, "id")

@@ -1,13 +1,9 @@
 package com.oo.resume.controller
 
-import com.oo.resume.context.Context
 import com.oo.resume.context.ContextPreference
-import com.oo.resume.data.header.HeaderConst
 import com.oo.resume.data.path.UrlConst
 import com.oo.resume.data.response.ResumeDTO
-import com.oo.resume.entity.Account
 import com.oo.resume.entity.Resume
-import com.oo.resume.exception.AuthorityError
 import com.oo.resume.exception.IlleageError
 import com.oo.resume.service.interf.IAccountService
 import com.oo.resume.service.interf.IResumeService
@@ -39,19 +35,19 @@ class ResumeController {
 
     @GetMapping(UrlConst.RESUME_LIST)
     fun getResumeList(@RequestHeader headers: HttpHeaders): List<ResumeDTO>? {
-        return BeanCovertor.convert(resumeService.getResumeList(ContextPreference.getAccount()?.session_user), object : TypeToken<List<ResumeDTO>>() {}.type)
+        return BeanCovertor.convert(resumeService.getResumeList(ContextPreference.getAccount().id), object : TypeToken<List<ResumeDTO>>() {}.type)
     }
 
     @PostMapping(UrlConst.RESUME_CREATE_OR_UPDATE)
     fun createOrUpdate(@RequestBody pResume: ResumeDTO?): ResumeDTO? {
         if (pResume == null) throw IlleageError("请求参数为空")
         if (pResume.shortLink.isNullOrBlank()) throw IlleageError("短连接不合法")
-        val resumeEntity = resumeService.getResumeByShortLink(pResume.shortLink)
+        val shortLinkEntity = resumeService.getResumeByShortLink(pResume.shortLink)
         if (pResume.id != null) {
+            val resumeEntity = resumeService.getResumeByID(pResume.id, ContextPreference.getAccount().id)
             if (resumeEntity == null) throw IlleageError("简历不存在")
-            resumeSecurityValid(ContextPreference.getAccount().session_user, resumeEntity.account?.session_user)
         }
-        shortLinkExistValid(pResume.shortLink, resumeEntity?.shortLink, pResume.id == null)
+        shortLinkExistValid(pResume.shortLink, shortLinkEntity?.shortLink, pResume.id == null)
         val saveEntity = Resume()
         BeanCovertor.copyProperties(pResume, saveEntity, false)
         return BeanCovertor.convert(resumeService.createOrUpdate(saveEntity), ResumeDTO::class.java)
@@ -60,9 +56,8 @@ class ResumeController {
     @GetMapping(UrlConst.RESUME_DETAIL)
     fun getResumeDetail(@PathVariable(value = UrlConst.RESUME_PARAMS_RESUME_ID, required = true) resumeId: Long?, @RequestHeader headers: HttpHeaders): List<ResumeDTO>? {
         if (resumeId == null) throw IlleageError("参数不合法")
-        val resumeEntity = resumeService.getResumeByID(resumeId)
+        val resumeEntity = resumeService.getResumeByID(resumeId, ContextPreference.getAccount().id)
         if (resumeEntity == null) throw IlleageError("简历不存在")
-        resumeSecurityValid(ContextPreference.getAccount()?.session_user, resumeEntity.account?.session_user)
         return BeanCovertor.convert(resumeEntity, ResumeDTO::class.java)
     }
 
@@ -71,14 +66,9 @@ class ResumeController {
         if (isNew || targetShortLink != sourceShortLink) throw IlleageError("短连接已存在")
     }
 
-
-    private fun resumeSecurityValid(request_user_session: String?, real_user_session: String?) {
-        if (real_user_session != request_user_session) throw IlleageError("无权限修改此简历")
-    }
-
     @DeleteMapping(UrlConst.RESUME_DELETE)
     fun delete(@PathVariable(value = UrlConst.RESUME_PARAMS_RESUME_ID, required = true) resumeId: Long?): Boolean? {
-        return resumeService.delete(resumeId)
+        return resumeService.delete(resumeId, ContextPreference.getAccount().id)
     }
 
 }

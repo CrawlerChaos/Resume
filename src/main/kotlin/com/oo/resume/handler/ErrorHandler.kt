@@ -1,6 +1,6 @@
 package com.oo.resume.handler
 
-import com.oo.resume.constance.ApiErrorCode
+import com.oo.resume.data.const.ApiErrorCode
 import com.oo.resume.exception.ApiError
 import com.oo.resume.data.response.ErrorBody
 import org.springframework.web.bind.annotation.ExceptionHandler

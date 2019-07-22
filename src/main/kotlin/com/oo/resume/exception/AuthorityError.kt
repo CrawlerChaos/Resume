@@ -1,6 +1,6 @@
 package com.oo.resume.exception
 
-import com.oo.resume.constance.ApiErrorCode
+import com.oo.resume.data.const.ApiErrorCode
 
 /**
  *   yangchao
