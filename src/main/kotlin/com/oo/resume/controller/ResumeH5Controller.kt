@@ -1,6 +1,6 @@
 package com.oo.resume.controller
 
-import com.oo.resume.data.path.UrlConst
+import com.oo.resume.data.path.ReviewUrl
 import com.oo.resume.service.interf.IResumeService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping
  */
 
 @Controller
-@RequestMapping(UrlConst.REVIEW_PREFIX)
+@RequestMapping(ReviewUrl.PREFIX)
 class ResumeH5Controller {
 
     @Autowired
     @Lazy
     lateinit var resumeService: IResumeService
 
-    @GetMapping(UrlConst.REVIEW_RESUME)
-    fun resume(@PathVariable(value = UrlConst.REVIEW_PARAM_SHORT_LINK, required = true) shortLink: String, model: Model): String {
+    @GetMapping(ReviewUrl.PATH_PREVIEW)
+    fun resume(@PathVariable(value = ReviewUrl.PARAM_SHORT_LINK, required = true) shortLink: String, model: Model): String {
         val resume = resumeService.getResumeByShortLink(shortLink)
         if (resume == null) return "error/404"
         else {

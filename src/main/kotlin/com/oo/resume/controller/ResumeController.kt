@@ -1,7 +1,7 @@
 package com.oo.resume.controller
 
 import com.oo.resume.context.ContextPreference
-import com.oo.resume.data.path.UrlConst
+import com.oo.resume.data.path.ResumeUrl
 import com.oo.resume.data.response.ResumeDTO
 import com.oo.resume.entity.Resume
 import com.oo.resume.exception.IlleageError
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*
  *
  */
 @RestController
-@RequestMapping(UrlConst.RESUME_PREFIX)
+@RequestMapping(ResumeUrl.PREFIX)
 class ResumeController {
 
     @Autowired
@@ -32,12 +32,12 @@ class ResumeController {
     lateinit var accountService: IAccountService
 
 
-    @GetMapping(UrlConst.RESUME_LIST)
+    @GetMapping(ResumeUrl.PATH_LIST)
     fun getResumeList(): List<ResumeDTO>? {
         return BeanCovertor.convert(resumeService.getResumeList(ContextPreference.getAccount().id), object : TypeToken<List<ResumeDTO>>() {}.type)
     }
 
-    @PostMapping(UrlConst.RESUME_CREATE_OR_UPDATE)
+    @PostMapping(ResumeUrl.PATH_CREATE_OR_UPDATE)
     fun createOrUpdate(@RequestBody pResume: ResumeDTO?): ResumeDTO? {
         if (pResume == null) throw IlleageError("请求参数为空")
         if (pResume.shortLink.isNullOrBlank()) throw IlleageError("短连接不合法")
@@ -52,8 +52,8 @@ class ResumeController {
         return BeanCovertor.convert(resumeService.createOrUpdate(saveEntity), ResumeDTO::class.java)
     }
 
-    @GetMapping(UrlConst.RESUME_DETAIL)
-    fun getResumeDetail(@PathVariable(value = UrlConst.RESUME_PARAMS_RESUME_ID, required = true) resumeId: Long?): List<ResumeDTO>? {
+    @GetMapping(ResumeUrl.PATH_DETAIL)
+    fun getResumeDetail(@PathVariable(value = ResumeUrl.PARAMS_RESUME_ID, required = true) resumeId: Long?): List<ResumeDTO>? {
         if (resumeId == null) throw IlleageError("参数不合法")
         val resumeEntity = resumeService.getResumeByID(resumeId, ContextPreference.getAccount().id)
         if (resumeEntity == null) throw IlleageError("简历不存在")
@@ -65,8 +65,8 @@ class ResumeController {
         if (isNew || targetShortLink != sourceShortLink) throw IlleageError("短连接已存在")
     }
 
-    @DeleteMapping(UrlConst.RESUME_DELETE)
-    fun delete(@PathVariable(value = UrlConst.RESUME_PARAMS_RESUME_ID, required = true) resumeId: Long?): Boolean? {
+    @DeleteMapping(ResumeUrl.PATH_DELETE)
+    fun delete(@PathVariable(value = ResumeUrl.PARAMS_RESUME_ID, required = true) resumeId: Long?): Boolean? {
         return resumeService.delete(resumeId, ContextPreference.getAccount().id)
     }
 

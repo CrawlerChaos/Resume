@@ -3,7 +3,7 @@ package com.oo.resume.controller
 import com.oo.resume.constance.ApiErrorMsg
 import com.oo.resume.constance.Regex
 import com.oo.resume.context.ContextPreference
-import com.oo.resume.data.path.UrlConst
+import com.oo.resume.data.path.AccountUrl
 import com.oo.resume.data.request.LoginRequest
 import com.oo.resume.data.request.RegistRequest
 import com.oo.resume.data.response.AccountDTO
@@ -25,14 +25,14 @@ import java.util.regex.Pattern
  *
  */
 @RestController
-@RequestMapping(UrlConst.ACCOUNT_PREFIX)
-class SignInController {
+@RequestMapping(AccountUrl.PREFIX)
+class AccountController {
 
     @Autowired
     @Lazy
     lateinit var accountService: IAccountService
 
-    @PostMapping(UrlConst.ACCOUNT_REGIST)
+    @PostMapping(AccountUrl.PATH_REGIST)
     @Throws(ApiError::class)
     fun regist(@RequestBody registRequest: RegistRequest?): AccountDTO? {
         if (registRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
@@ -51,7 +51,7 @@ class SignInController {
         return BeanCovertor.convert(accountService.save(account), AccountDTO::class.java)
     }
 
-    @PostMapping(UrlConst.ACCOUNT_LOGIN)
+    @PostMapping(AccountUrl.PATH_LOGIN)
     @Throws(ApiError::class)
     fun login(@RequestBody loginRequest: LoginRequest?): AccountDTO? {
         if (loginRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
@@ -66,9 +66,9 @@ class SignInController {
     }
 
 
-    @PutMapping(UrlConst.ACCOUNT_UPDATE)
+    @PutMapping(AccountUrl.PATH_UPDATE)
     @Throws(ApiError::class)
-    fun update(@RequestBody pAccount: Account?): AccountDTO? {
+    fun update(@RequestBody pAccount: AccountDTO?): AccountDTO? {
         if (pAccount == null) throw IlleageError("请求参数为空")
         var account = ContextPreference.getAccount()
         BeanCovertor.copyProperties(pAccount, account, true, "id")
