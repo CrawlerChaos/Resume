@@ -32,7 +32,9 @@ open class WebConfig : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(createSessionInterceptor()).addPathPatterns(
-                "${ResumeUrl.PREFIX}/**", AccountUrl.PREFIX + AccountUrl.PATH_UPDATE)
+                "${ResumeUrl.PREFIX}/**",
+                AccountUrl.PREFIX + AccountUrl.PATH_UPDATE,
+                AccountUrl.PREFIX + AccountUrl.PATH_RESET_PASSWORD)
         super.addInterceptors(registry)
     }
 }

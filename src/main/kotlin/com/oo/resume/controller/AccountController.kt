@@ -6,6 +6,7 @@ import com.oo.resume.context.ContextPreference
 import com.oo.resume.data.path.AccountUrl
 import com.oo.resume.data.request.LoginRequest
 import com.oo.resume.data.request.RegistRequest
+import com.oo.resume.data.request.ResetPasswordRequest
 import com.oo.resume.data.response.AccountDTO
 import com.oo.resume.entity.Account
 import com.oo.resume.exception.ApiError
@@ -74,6 +75,20 @@ class AccountController {
         BeanCovertor.copyProperties(pAccount, account, true, "id")
         return BeanCovertor.convert(accountService.save(account), AccountDTO::class.java)
     }
+
+    @PutMapping(AccountUrl.PATH_RESET_PASSWORD)
+    @Throws(ApiError::class)
+    fun resetPassword(@RequestBody pResetPasswordRequest: ResetPasswordRequest?): Boolean? {
+        if (pResetPasswordRequest == null) throw IlleageError("请求参数为空")
+        val newPassword = pResetPasswordRequest.newPasswod
+        if (newPassword.isNullOrBlank()) throw IlleageError("新密码不能为空")
+        var account = ContextPreference.getAccount()
+        if (account.password != pResetPasswordRequest.oldPassword) throw IlleageError("密码不正确")
+        account.password = newPassword
+        accountService.save(account)
+        return true
+    }
+
 
     private fun updateSessionUser(pAccount: Account) {
         pAccount.session_key = UUID.randomUUID().toString()
