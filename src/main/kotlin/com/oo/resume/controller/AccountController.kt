@@ -34,7 +34,6 @@ class AccountController {
     lateinit var accountService: IAccountService
 
     @PostMapping(AccountUrl.PATH_REGIST)
-    @Throws(ApiError::class)
     fun regist(@RequestBody registRequest: RegistRequest?): AccountDTO? {
         if (registRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
         val phone = registRequest.phone
@@ -53,7 +52,6 @@ class AccountController {
     }
 
     @PostMapping(AccountUrl.PATH_LOGIN)
-    @Throws(ApiError::class)
     fun login(@RequestBody loginRequest: LoginRequest?): AccountDTO? {
         if (loginRequest == null) throw IlleageError(ApiErrorMsg.NULL_REQUEST)
         val phone = loginRequest.phone
@@ -68,7 +66,6 @@ class AccountController {
 
 
     @PutMapping(AccountUrl.PATH_UPDATE)
-    @Throws(ApiError::class)
     fun update(@RequestBody pAccount: AccountDTO?): AccountDTO? {
         if (pAccount == null) throw IlleageError("请求参数为空")
         var account = ContextPreference.getAccount()
@@ -77,7 +74,6 @@ class AccountController {
     }
 
     @PutMapping(AccountUrl.PATH_RESET_PASSWORD)
-    @Throws(ApiError::class)
     fun resetPassword(@RequestBody pResetPasswordRequest: ResetPasswordRequest?): Boolean? {
         if (pResetPasswordRequest == null) throw IlleageError("请求参数为空")
         val newPassword = pResetPasswordRequest.newPasswod
