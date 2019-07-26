@@ -13,8 +13,13 @@
 `GRANT ALL PRIVILEGES ON *.* TO 'user'@'%' WITH GRANT OPTION;`
 + **授权刷新** 
 
-`ALTER USER 'user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';`
+`FLUSH PRIVILEGES;`
++ **远程密码权限**
 
+`ALTER USER 'user'@'%' IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER; `
++ **密码修改**
+
+`ALTER USER 'user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';`
 + **去除密码过于简单验证**
 
 ```
