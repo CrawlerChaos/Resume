@@ -53,7 +53,7 @@ class ResumeController {
     }
 
     @GetMapping(ResumeUrl.PATH_DETAIL)
-    fun getResumeDetail(@PathVariable(value = ResumeUrl.PARAMS_RESUME_ID, required = true) resumeId: Long?): List<ResumeDTO>? {
+    fun getResumeDetail(@PathVariable(value = ResumeUrl.PARAMS_RESUME_ID, required = true) resumeId: Long?): ResumeDTO? {
         if (resumeId == null) throw IlleageError("参数不合法")
         val resumeEntity = resumeService.getResumeByID(resumeId, ContextPreference.getAccount().id)
         if (resumeEntity == null) throw IlleageError("简历不存在")
