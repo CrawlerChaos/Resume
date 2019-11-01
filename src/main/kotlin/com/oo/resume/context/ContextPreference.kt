@@ -22,7 +22,7 @@ class ContextPreference {
         }
 
         fun put(key: Context?, value: Any?): Boolean {
-            Logger.info("\n------------put------------\n" + JsonUtil.pretty(value))
+//            Logger.info("\n------------put------------\n" + JsonUtil.pretty(value))
             if (key == null || value == null) return false
             get()[key] = value
             return true
@@ -32,7 +32,7 @@ class ContextPreference {
         fun <T> get(key: Context?): T? {
             if (key == null) return null
             val value = get()[key] as T
-            Logger.info("\n------------get------------\n" + JsonUtil.pretty(value))
+//            Logger.info("\n------------get------------\n" + JsonUtil.pretty(value))
             return value
         }
 

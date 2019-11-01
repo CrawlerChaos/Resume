@@ -1,4 +1,4 @@
-package com.oo.resume
+package com.oo.resume.config
 
 import com.oo.resume.data.path.AccountUrl
 import com.oo.resume.data.path.ResumeUrl
